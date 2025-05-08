@@ -1,4 +1,6 @@
 ﻿using CloudStorage.Domain.Abstractions;
+using CloudStorage.UseCases.Mappers;
+using CloudStorage.UseCases.UploadFile;
 using MediatR;
 using FileNotFoundException = CloudStorage.Domain.Exceptions.FileNotFoundException;
 
@@ -12,7 +14,7 @@ internal sealed class GetFileQueryHandler(
     {
         var fileMetadata = await fileMetadataRepository.GetByIdAsync(request.FileMetadataId, cancellationToken);
         var storageId = fileMetadata.StorageId ?? throw new FileNotFoundException(request.FileMetadataId);
-        await using var fileStream = await fileStorage.DownloadFileAsync(storageId, cancellationToken);
-        throw new NotImplementedException();
+        var fileStream = await fileStorage.DownloadFileAsync(storageId, cancellationToken);
+        return new GetFileQueryResult(fileStream, fileMetadata.MapToFileMetadataDto());
     }
 }

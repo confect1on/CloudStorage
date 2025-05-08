@@ -13,7 +13,7 @@ public class FilesController
     }
 
     [HttpPost]
-    public Task UploadFile()
+    public Task UploadFile(IFormFile file)
     {
         throw new NotImplementedException();
     }

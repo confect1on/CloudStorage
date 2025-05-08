@@ -1,3 +1,5 @@
-﻿namespace CloudStorage.UseCases.GetFile;
+﻿using CloudStorage.UseCases.UploadFile;
 
-public record GetFileQueryResult();
+namespace CloudStorage.UseCases.GetFile;
+
+public record GetFileQueryResult(Stream FileStream, FileMetadataDto FileMetadataDto);
