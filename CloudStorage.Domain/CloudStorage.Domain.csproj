@@ -4,10 +4,11 @@
         <TargetFramework>net9.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
+        <OutputType>Library</OutputType>
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="Abstractions\" />
+      <PackageReference Include="StronglyTypedId" Version="0.2.1" />
     </ItemGroup>
 
 </Project>
