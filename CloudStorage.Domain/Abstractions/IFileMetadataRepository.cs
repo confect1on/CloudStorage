@@ -10,4 +10,6 @@ public interface IFileMetadataRepository
     Task<FileMetadata> GetByIdAsync(FileMetadataId fileMetadataId, CancellationToken cancellationToken = default);
     
     Task AttachStorageIdAsync(FileMetadataId fileMetadataId, StorageId storageId, CancellationToken cancellationToken = default);
+    
+    Task DeleteByIdAsync(FileMetadataId fileMetadataId, CancellationToken cancellationToken = default);
 }
