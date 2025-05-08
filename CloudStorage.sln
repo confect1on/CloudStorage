@@ -10,6 +10,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{AE87DB
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudStorage.UseCases", "CloudStorage.UseCases\CloudStorage.UseCases.csproj", "{22872A24-8F62-4C7C-9FFE-9913F45909DD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudStorage.Infrastructure.DataAccess", "CloudStorage.Infrastructure.DataAccess\CloudStorage.Infrastructure.DataAccess.csproj", "{BC588200-4B29-4BEE-9864-5218245F1293}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application", "{F4AD4DB9-ED15-4103-AA3A-FF599FEE847B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -28,9 +32,15 @@ Global
 		{22872A24-8F62-4C7C-9FFE-9913F45909DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{22872A24-8F62-4C7C-9FFE-9913F45909DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{22872A24-8F62-4C7C-9FFE-9913F45909DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BC588200-4B29-4BEE-9864-5218245F1293}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC588200-4B29-4BEE-9864-5218245F1293}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC588200-4B29-4BEE-9864-5218245F1293}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC588200-4B29-4BEE-9864-5218245F1293}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{FD339520-AA9F-451F-9937-959FF5FD30F4} = {AE87DB26-0D8F-4489-BEFC-C924D7203C9C}
 		{22872A24-8F62-4C7C-9FFE-9913F45909DD} = {AE87DB26-0D8F-4489-BEFC-C924D7203C9C}
+		{BC588200-4B29-4BEE-9864-5218245F1293} = {A7486728-1DC7-4A15-B05F-8A3B0F00AA5F}
+		{417A8975-6195-425E-9E0D-4910BC8062DC} = {F4AD4DB9-ED15-4103-AA3A-FF599FEE847B}
 	EndGlobalSection
 EndGlobal
