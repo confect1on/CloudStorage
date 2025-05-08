@@ -1,4 +1,4 @@
-namespace SecretsSharing.AuthService;
+namespace CloudStorage;
 
 public class WeatherForecast
 {

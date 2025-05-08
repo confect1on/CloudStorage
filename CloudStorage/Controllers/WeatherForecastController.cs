@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace SecretsSharing.Controllers;
+namespace CloudStorage.Controllers;
 
 [ApiController]
 [Route("[controller]")]
