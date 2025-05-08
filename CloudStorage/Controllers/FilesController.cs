@@ -11,6 +11,16 @@ public class FilesController
     {
         throw new NotImplementedException();
     }
-    
-    public 
+
+    [HttpPost]
+    public Task UploadFile()
+    {
+        throw new NotImplementedException();
+    }
+
+    [HttpDelete("{id:guid}")]
+    public Task DeleteFile(Guid id)
+    {
+        throw new NotImplementedException();
+    }
 }
