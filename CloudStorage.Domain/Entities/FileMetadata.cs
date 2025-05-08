@@ -1,4 +1,4 @@
-﻿namespace CloudStorage.Domain;
+﻿namespace CloudStorage.Domain.Entities;
 
 public class FileMetadata
 {
