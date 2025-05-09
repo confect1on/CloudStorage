@@ -24,13 +24,13 @@ public static class ServiceCollectionExtensions
                 .WithGlobalConnectionString(
                     s =>
                     {
-                        var dalOptions = s.GetRequiredService<IOptions<DalOptions>>();
+                        var dalOptions = s.GetRequiredService<IOptions<DalSettings>>();
                         return dalOptions.Value.PostgresConnectionString;
                     })
                 .ScanIn(typeof(AddFileMetadataTable).Assembly).For.Migrations());
 
     private static IServiceCollection AddDataAccessOptions(this IServiceCollection services, IConfiguration configuration) => services
-        .Configure<DalOptions>(configuration.GetSection(nameof(DalOptions)));
+        .Configure<DalSettings>(configuration.GetSection(nameof(DalSettings)));
 
     private static IServiceCollection AddServices(this IServiceCollection services) => services
         .AddSingleton<IFileStorage, InMemoryFileStorage>()

@@ -5,9 +5,11 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddDomainServices();
-builder.Services.AddDataAccessInfrastructure(builder.Configuration);
-builder.Services.AddControllers();
+builder.Services
+    .AddDomainServices()
+    .AddDataAccessInfrastructure(builder.Configuration);
+builder.Services
+    .AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 builder.Services
@@ -24,6 +26,7 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
+    app.UseSwaggerUI(opt => opt.SwaggerEndpoint("/openapi/v1.json", "Cloud Storage API"));
 }
 
 app.UseHttpsRedirection();

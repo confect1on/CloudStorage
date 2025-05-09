@@ -5,13 +5,13 @@ namespace CloudStorage.Infrastructure.DataAccess;
 
 public class PostgresRepository
 {
-    private readonly DalOptions _dalOptions;
+    private readonly DalSettings _dalSettings;
 
     protected const int DefaultTimeoutInSeconds = 5;
 
-    protected PostgresRepository(DalOptions dalOptions)
+    protected PostgresRepository(DalSettings dalSettings)
     {
-        _dalOptions = dalOptions;
+        _dalSettings = dalSettings;
     }
 
     protected async Task<NpgsqlConnection> GetConnectionAsync()
@@ -21,7 +21,7 @@ public class PostgresRepository
         {
             throw new InvalidOperationException("Transaction is aborted.");
         }
-        var connection = new NpgsqlConnection(_dalOptions.PostgresConnectionString);
+        var connection = new NpgsqlConnection(_dalSettings.PostgresConnectionString);
         await connection.OpenAsync();
         await connection.ReloadTypesAsync();
         return connection;

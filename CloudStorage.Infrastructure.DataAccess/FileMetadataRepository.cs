@@ -3,10 +3,11 @@ using CloudStorage.Domain.Entities;
 using CloudStorage.Domain.Entities.Ids;
 using CloudStorage.Domain.Exceptions;
 using Dapper;
+using Microsoft.Extensions.Options;
 
 namespace CloudStorage.Infrastructure.DataAccess;
 
-internal sealed class FileMetadataRepository(DalOptions dalOptions) : PostgresRepository(dalOptions), IFileMetadataRepository
+internal sealed class FileMetadataRepository(IOptions<DalSettings> dalOptions) : PostgresRepository(dalOptions.Value), IFileMetadataRepository
 {
     public async Task<FileMetadataId> AddAsync(FileMetadata fileMetadata, CancellationToken cancellationToken = default)
     {

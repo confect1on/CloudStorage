@@ -3,11 +3,11 @@ using CloudStorage.UseCases.GetFile;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CloudStorage.Controllers;
+namespace CloudStorage.Controllers.V1;
 
 [ApiController]
-[Route("/api/[controller]")]
-public class FilesController(IMediator mediator)
+[Route("/api/v1/files")]
+public class FilesV1Controller(IMediator mediator) : ControllerBase
 {
     [HttpGet("{id:guid}")]
     public async Task<IActionResult> GetFile(Guid id, CancellationToken cancellationToken)
