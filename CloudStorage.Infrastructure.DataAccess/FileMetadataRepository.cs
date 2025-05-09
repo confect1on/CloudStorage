@@ -1,24 +1,64 @@
 ﻿using CloudStorage.Domain.Abstractions;
 using CloudStorage.Domain.Entities;
 using CloudStorage.Domain.Entities.Ids;
+using CloudStorage.Domain.Exceptions;
+using Dapper;
 
 namespace CloudStorage.Infrastructure.DataAccess;
 
 internal sealed class FileMetadataRepository(DalOptions dalOptions) : PostgresRepository(dalOptions), IFileMetadataRepository
 {
-    public Task<FileMetadataId> AddAsync(FileMetadata file, CancellationToken cancellationToken = default)
+    public async Task<FileMetadataId> AddAsync(FileMetadata fileMetadata, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        await using var connection = await GetConnectionAsync();
+        const string sqlQuery =
+            """
+            insert into file_metadata (id, user_id, storage_id, file_name, file_size_in_bytes, mime_type, created_at)
+            values (@Id, @UserId, @StorageId, @FileName, @FileSizeInBytes, @MimeType, @CreatedAt);
+            """;
+        var fileMetaDataId = await connection.QueryFirstAsync<FileMetadataId>(sqlQuery, fileMetadata);
+        return fileMetaDataId;
     }
 
-    public Task<FileMetadata> GetByIdAsync(FileMetadataId fileMetadataId, CancellationToken cancellationToken = default)
+    public async Task<FileMetadata> GetByIdAsync(FileMetadataId fileMetadataId, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        await using var connection = await GetConnectionAsync();
+        const string sqlQuery =
+            """
+            select id, user_id, storage_id, file_name, file_size_in_bytes, mime_type, created_at
+            from file_metadata
+            where id = @Id
+            """;
+        var commandDefinition = new CommandDefinition(sqlQuery, new
+        {
+            Id = fileMetadataId
+        });
+        var fileMetadata = await connection.QueryFirstOrDefaultAsync<FileMetadata>(commandDefinition);
+        if (fileMetadata is null)
+        {
+            throw new FileMetadataNotFoundException(fileMetadataId);
+        }
+        return fileMetadata;
     }
 
-    public Task AttachStorageIdAsync(FileMetadataId fileMetadataId, StorageId storageId, CancellationToken cancellationToken = default)
+    public async Task AttachStorageIdAsync(FileMetadataId fileMetadataId, StorageId storageId, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        await using var connection = await GetConnectionAsync();
+        const string sqlQuery =
+            """
+            update file_metadata
+            set storage_id = @StorageId
+            where id = @Id
+            """;
+        var command = new CommandDefinition(
+            sqlQuery,
+            new
+            {
+                Id = fileMetadataId,
+                StorageId = storageId
+            },
+            cancellationToken: cancellationToken);
+        await connection.ExecuteAsync(command);
     }
 
     public Task DeleteByIdAsync(FileMetadataId fileMetadataId, CancellationToken cancellationToken = default)

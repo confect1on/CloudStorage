@@ -12,6 +12,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\CloudStorage.Infrastructure.DataAccess\CloudStorage.Infrastructure.DataAccess.csproj" />
       <ProjectReference Include="..\CloudStorage.UseCases\CloudStorage.UseCases.csproj" />
     </ItemGroup>
 

@@ -1,4 +1,6 @@
-﻿namespace CloudStorage.Domain.Entities.Ids;
+﻿using StronglyTypedIds;
 
-[StronglyTypedId(backingType: StronglyTypedIdBackingType.Guid, jsonConverter: StronglyTypedIdJsonConverter.SystemTextJson)]
-public partial struct FileMetadataId;
+namespace CloudStorage.Domain.Entities.Ids;
+
+[StronglyTypedId(Template.Guid, "guid-dapper")]
+public readonly partial struct FileMetadataId;

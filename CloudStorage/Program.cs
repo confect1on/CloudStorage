@@ -1,9 +1,10 @@
+using CloudStorage.Infrastructure.DataAccess.Extensions;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
+builder.Services.AddDataAccessInfrastructure(builder.Configuration);
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
@@ -28,5 +29,5 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
-
+app.MigrateUp();
 await app.RunAsync();

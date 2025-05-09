@@ -1,4 +1,6 @@
-﻿namespace CloudStorage.Domain.Entities.Ids;
+﻿using StronglyTypedIds;
 
-[StronglyTypedId(backingType: StronglyTypedIdBackingType.Long, jsonConverter: StronglyTypedIdJsonConverter.SystemTextJson)]
-public partial struct UserId;
+namespace CloudStorage.Domain.Entities.Ids;
+
+[StronglyTypedId(Template.Long)]
+public readonly partial struct UserId;

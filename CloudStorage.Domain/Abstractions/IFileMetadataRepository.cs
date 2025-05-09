@@ -5,7 +5,7 @@ namespace CloudStorage.Domain.Abstractions;
 
 public interface IFileMetadataRepository
 {
-    Task<FileMetadataId> AddAsync(FileMetadata file, CancellationToken cancellationToken = default);
+    Task<FileMetadataId> AddAsync(FileMetadata fileMetadata, CancellationToken cancellationToken = default);
     
     Task<FileMetadata> GetByIdAsync(FileMetadataId fileMetadataId, CancellationToken cancellationToken = default);
     

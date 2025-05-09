@@ -1,5 +1,6 @@
 ﻿using CloudStorage.Domain.Abstractions;
 using CloudStorage.Domain.Entities;
+using CloudStorage.Domain.Entities.Ids;
 using MediatR;
 
 namespace CloudStorage.UseCases.UploadFile;
@@ -14,6 +15,7 @@ internal sealed class UploadFileCommandHandler(
     {
         var fileMetadata = new FileMetadata
         {
+            Id = new FileMetadataId(Guid.NewGuid()),
             FileName = request.FileMetadataDto.FileName,
             MimeType = request.FileMetadataDto.MimeType,
             FileSizeInBytes = request.FileMetadataDto.FileSizeInBytes,

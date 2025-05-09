@@ -4,7 +4,7 @@ namespace CloudStorage.Domain.Entities;
 
 public class FileMetadata
 {
-    public FileMetadataId Id { get; private set; }
+    public FileMetadataId Id { get; set; }
     
     public required UserId UserId { get; set; }
     
