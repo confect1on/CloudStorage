@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.WebUtilities;
 
 namespace CloudStorage.Infrastructure.DataAccess;
 
-public class InMemoryFileStorage : IFileStorage
+internal sealed class InMemoryFileStorage : IFileStorage
 {
     private readonly ConcurrentDictionary<StorageId, byte[]> _files = new();
     public async Task<StorageId> UploadFile(Stream stream, CancellationToken cancellationToken = default)

@@ -1,4 +1,5 @@
-﻿using CloudStorage.Infrastructure.DataAccess.Migrations;
+﻿using CloudStorage.Domain.Abstractions;
+using CloudStorage.Infrastructure.DataAccess.Migrations;
 using FluentMigrator.Runner;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,7 +13,8 @@ public static class ServiceCollectionExtensions
     {
         return services
             .AddDataAccessOptions(configuration)
-            .AddMigrations();
+            .AddMigrations()
+            .AddServices();
     }
 
     private static IServiceCollection AddMigrations(this IServiceCollection services) => services.AddFluentMigratorCore()
@@ -29,4 +31,8 @@ public static class ServiceCollectionExtensions
 
     private static IServiceCollection AddDataAccessOptions(this IServiceCollection services, IConfiguration configuration) => services
         .Configure<DalOptions>(configuration.GetSection(nameof(DalOptions)));
+
+    private static IServiceCollection AddServices(this IServiceCollection services) => services
+        .AddSingleton<IFileStorage, InMemoryFileStorage>()
+        .AddSingleton<IFileMetadataRepository, FileMetadataRepository>();
 }
