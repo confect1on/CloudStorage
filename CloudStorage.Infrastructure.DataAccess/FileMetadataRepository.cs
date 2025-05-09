@@ -27,12 +27,14 @@ internal sealed class FileMetadataRepository(DalOptions dalOptions) : PostgresRe
             """
             select id, user_id, storage_id, file_name, file_size_in_bytes, mime_type, created_at
             from file_metadata
-            where id = @Id
+            where id = @Id;
             """;
-        var commandDefinition = new CommandDefinition(sqlQuery, new
-        {
-            Id = fileMetadataId
-        });
+        var commandDefinition = new CommandDefinition(
+            sqlQuery, new
+            {
+                Id = fileMetadataId
+            },
+            cancellationToken: cancellationToken);
         var fileMetadata = await connection.QueryFirstOrDefaultAsync<FileMetadata>(commandDefinition);
         if (fileMetadata is null)
         {
@@ -48,7 +50,7 @@ internal sealed class FileMetadataRepository(DalOptions dalOptions) : PostgresRe
             """
             update file_metadata
             set storage_id = @StorageId
-            where id = @Id
+            where id = @Id;
             """;
         var command = new CommandDefinition(
             sqlQuery,
@@ -58,11 +60,32 @@ internal sealed class FileMetadataRepository(DalOptions dalOptions) : PostgresRe
                 StorageId = storageId
             },
             cancellationToken: cancellationToken);
-        await connection.ExecuteAsync(command);
+        var rows = await connection.ExecuteAsync(command);
+        if (rows == 0)
+        {
+            throw new FileMetadataNotFoundException(fileMetadataId);
+        }
     }
 
-    public Task DeleteByIdAsync(FileMetadataId fileMetadataId, CancellationToken cancellationToken = default)
+    public async Task DeleteByIdAsync(FileMetadataId fileMetadataId, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        await using var connection = await GetConnectionAsync();
+        const string sqlQuery =
+            """
+            delete from file_metadata
+            where id = @Id;
+            """;
+        var command = new CommandDefinition(
+            sqlQuery,
+            new
+            {
+                Id = fileMetadataId
+            },
+            cancellationToken: cancellationToken);
+        var rows = await connection.ExecuteAsync(command);
+        if (rows == 0)
+        {
+            throw new FileMetadataNotFoundException(fileMetadataId);
+        }
     }
 }
