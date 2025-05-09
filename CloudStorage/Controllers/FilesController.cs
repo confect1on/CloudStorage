@@ -18,8 +18,11 @@ public class FilesController(IMediator mediator)
     }
 
     [HttpPost]
-    public Task UploadFile(IFormFile file)
+    [RequestSizeLimit(100_000_000)]
+    public async Task UploadFile(IFormFile file)
     {
+        await using var memoryStream = new MemoryStream((int)file.Length);
+        await file.CopyToAsync(memoryStream);
         throw new NotImplementedException();
     }
 
