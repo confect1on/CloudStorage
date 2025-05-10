@@ -3,4 +3,4 @@ using MediatR;
 
 namespace CloudStorage.UseCases.DeleteFile;
 
-public record DeleteRecordCommand(FileMetadataId FileMetadataId) : IRequest;
+public record DeleteFileCommand(FileMetadataId FileMetadataId) : IRequest;

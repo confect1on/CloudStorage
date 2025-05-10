@@ -15,7 +15,8 @@ internal sealed class FileMetadataRepository(IOptions<DalSettings> dalOptions) :
         const string sqlQuery =
             """
             insert into file_metadata (id, user_id, storage_id, file_name, file_size_in_bytes, mime_type, created_at)
-            values (@Id, @UserId, @StorageId, @FileName, @FileSizeInBytes, @MimeType, @CreatedAt);
+            values (@Id, @UserId, @StorageId, @FileName, @FileSizeInBytes, @MimeType, @CreatedAt)
+            returning id;
             """;
         var fileMetaDataId = await connection.QueryFirstAsync<FileMetadataId>(sqlQuery, fileMetadata);
         return fileMetaDataId;

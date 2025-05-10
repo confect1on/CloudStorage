@@ -12,6 +12,7 @@ public class PostgresRepository
     protected PostgresRepository(DalSettings dalSettings)
     {
         _dalSettings = dalSettings;
+        Dapper.DefaultTypeMap.MatchNamesWithUnderscores = true;
     }
 
     protected async Task<NpgsqlConnection> GetConnectionAsync()

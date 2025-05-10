@@ -1,3 +1,3 @@
 ﻿namespace CloudStorage.UseCases.DeleteFile;
 
-public record DeleteRecordCommandResult();
+public record DeleteFileCommandResult();

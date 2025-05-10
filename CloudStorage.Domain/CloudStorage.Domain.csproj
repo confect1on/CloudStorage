@@ -1,5 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
+    <PackageReference Include="Dapper" /> <!--Dapper included because of StronglyTypedId library requested it-->
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
     <PackageReference Include="StronglyTypedId" />
     <PackageReference Include="StronglyTypedId.Templates" />

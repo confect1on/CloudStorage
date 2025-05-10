@@ -10,8 +10,9 @@ internal sealed class InMemoryFileStorage : IFileStorage
     public async Task<StorageId> UploadFile(Stream stream, CancellationToken cancellationToken = default)
     {
         var buffer = new byte[stream.Length];
-        var leastBytes = await stream.ReadAsync(buffer, cancellationToken);
-        if (leastBytes > 0)
+        stream.Position = 0;
+        var readBytes = await stream.ReadAsync(buffer.AsMemory(), cancellationToken);
+        if (readBytes < stream.Length)
         {
             throw new InvalidOperationException("File has not fully read");
         }
