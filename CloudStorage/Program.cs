@@ -1,6 +1,7 @@
 using CloudStorage.Domain;
 using CloudStorage.Infrastructure;
 using CloudStorage.Infrastructure.DataAccess.Extensions;
+using CloudStorage.Infrastructure.OpenAPI;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.OpenApi.Models;
 
