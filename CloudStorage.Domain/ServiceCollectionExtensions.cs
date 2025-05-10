@@ -1,5 +1,6 @@
 ﻿using CloudStorage.Domain.Abstractions;
 using CloudStorage.Domain.DomainServices;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace CloudStorage.Domain;
 
