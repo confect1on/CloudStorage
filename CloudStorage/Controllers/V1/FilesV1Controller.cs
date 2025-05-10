@@ -1,12 +1,14 @@
 ﻿using CloudStorage.Domain.Entities.Ids;
 using CloudStorage.UseCases.GetFile;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CloudStorage.Controllers.V1;
 
 [ApiController]
 [Route("/api/v1/files")]
+[Authorize]
 public class FilesV1Controller(IMediator mediator) : ControllerBase
 {
     [HttpGet("{id:guid}")]

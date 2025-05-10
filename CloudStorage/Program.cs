@@ -1,6 +1,8 @@
 using CloudStorage.Domain;
+using CloudStorage.Infrastructure;
 using CloudStorage.Infrastructure.DataAccess.Extensions;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,7 +13,12 @@ builder.Services
 builder.Services
     .AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
+builder.Services
+    .AddOpenApi(opt =>
+    {
+        opt.AddDocumentTransformer<BearerSecuritySchemeTransformer>();
+        opt.AddOperationTransformer<AuthorizeOperationTransformer>();
+    });
 builder.Services
     .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(
@@ -30,7 +37,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
