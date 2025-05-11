@@ -1,5 +1,7 @@
 <Project>
   <ItemGroup>
+    <PackageVersion Include="AWSSDK.Extensions.NETCore.Setup" Version="4.0.0" />
+    <PackageVersion Include="AWSSDK.S3" Version="4.0.0.3" />
     <PackageVersion Include="Dapper" Version="2.1.66" />
     <PackageVersion Include="FluentMigrator" Version="7.1.0" />
     <PackageVersion Include="FluentMigrator.Runner" Version="7.1.0" />
