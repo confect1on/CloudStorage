@@ -1,6 +1,8 @@
-﻿using CloudStorage.Domain.Abstractions;
+﻿using Amazon.S3;
+using CloudStorage.Domain.Abstractions;
 using CloudStorage.Domain.Entities.Ids;
 using CloudStorage.Infrastructure.DataAccess.Migrations;
+using CloudStorage.Infrastructure.DataAccess.S3;
 using Dapper;
 using FluentMigrator.Runner;
 using Microsoft.Extensions.Configuration;
@@ -21,9 +23,11 @@ public static class ServiceCollectionExtensions
         SqlMapper.AddTypeHandler(new StorageId.DapperTypeHandler());
         SqlMapper.AddTypeHandler(new UserId.DapperTypeHandler());
         return services
-            .AddDataAccessOptions(configuration)
+            .ConfigureRepositories(configuration)
             .AddMigrations()
-            .AddServices();
+            .AddRepositories()
+            .ConfigureFileStorage(configuration)
+            .AddFileStorage(configuration);
     }
     private static IServiceCollection AddMigrations(this IServiceCollection services) => services.AddFluentMigratorCore()
         .ConfigureRunner(
@@ -37,10 +41,24 @@ public static class ServiceCollectionExtensions
                     })
                 .ScanIn(typeof(AddFileMetadataTable).Assembly).For.Migrations());
 
-    private static IServiceCollection AddDataAccessOptions(this IServiceCollection services, IConfiguration configuration) => services
+    private static IServiceCollection ConfigureRepositories(this IServiceCollection services, IConfiguration configuration) => services
         .Configure<DalSettings>(configuration.GetSection(nameof(DalSettings)));
+    
+    private static IServiceCollection ConfigureFileStorage(this IServiceCollection services, IConfiguration configuration)
+    {
+        return services
+            .Configure<S3FileStorageSettings>(configuration.GetSection(nameof(S3FileStorageSettings)));
+    }
 
-    private static IServiceCollection AddServices(this IServiceCollection services) => services
-        .AddSingleton<IFileStorage, InMemoryFileStorage>()
+    private static IServiceCollection AddRepositories(this IServiceCollection services) => services
         .AddSingleton<IFileMetadataRepository, FileMetadataRepository>();
+    
+    private static IServiceCollection AddFileStorage(this IServiceCollection services, IConfiguration configuration)
+    {
+        return services
+            .AddDefaultAWSOptions(configuration.GetAWSOptions($"{nameof(S3FileStorageSettings)}:AWS"))
+            .AddAWSService<IAmazonS3>()
+            .AddSingleton<IFileStorage, S3FileStorage>()
+            .AddAsyncInitializer<S3FileStorageAsyncInitializer>();
+    }
 }

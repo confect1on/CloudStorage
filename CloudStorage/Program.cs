@@ -9,10 +9,13 @@ using Microsoft.OpenApi.Models;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
 builder.Services
+    .AddAsyncInitialization()
     .AddDomainServices()
     .AddDataAccessInfrastructure(builder.Configuration)
     .AddCloudStorageUseCases();
+
 builder.Services
     .AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
@@ -45,4 +48,4 @@ app.UseAuthorization();
 
 app.MapControllers();
 app.MigrateUp();
-await app.RunAsync();
+await app.InitAndRunAsync();

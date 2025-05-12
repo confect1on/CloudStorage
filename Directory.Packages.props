@@ -3,6 +3,7 @@
     <PackageVersion Include="AWSSDK.Extensions.NETCore.Setup" Version="4.0.0" />
     <PackageVersion Include="AWSSDK.S3" Version="4.0.0.3" />
     <PackageVersion Include="Dapper" Version="2.1.66" />
+    <PackageVersion Include="Extensions.Hosting.AsyncInitialization" Version="3.0.1" />
     <PackageVersion Include="FluentMigrator" Version="7.1.0" />
     <PackageVersion Include="FluentMigrator.Runner" Version="7.1.0" />
     <PackageVersion Include="MediatR" Version="12.5.0" />
@@ -14,5 +15,6 @@
     <PackageVersion Include="StronglyTypedId" Version="1.0.0-beta08" />
     <PackageVersion Include="StronglyTypedId.Templates" Version="1.0.0-beta08" />
     <PackageVersion Include="Swashbuckle.AspNetCore.SwaggerUI" Version="8.1.1" />
+    <PackageVersion Include="Microsoft.Extensions.Hosting.Abstractions" Version="9.0.4" />
   </ItemGroup>
 </Project>
