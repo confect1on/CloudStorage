@@ -1,17 +1,23 @@
 ﻿using Amazon.S3;
+using Amazon.S3.Model;
 using Extensions.Hosting.AsyncInitialization;
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
 namespace CloudStorage.Infrastructure.DataAccess.S3;
 
 internal sealed class S3FileStorageAsyncInitializer(
     IAmazonS3 amazonS3,
-    IOptions<S3FileStorageSettings> options,
-    ILogger<S3FileStorageAsyncInitializer> logger) : IAsyncInitializer
+    IOptions<S3FileStorageSettings> options) : IAsyncInitializer
 {
-    public Task InitializeAsync(CancellationToken cancellationToken)
+    public async Task InitializeAsync(CancellationToken cancellationToken)
     {
-        return amazonS3.EnsureBucketExistsAsync(options.Value.S3Bucket);
+        try
+        {
+            await amazonS3.EnsureBucketExistsAsync(options.Value.S3Bucket);
+        }
+        catch (BucketAlreadyOwnedByYouException)
+        {
+            // BUG: https://github.com/aws/aws-sdk-net/issues/3807
+        }
     }
 }
