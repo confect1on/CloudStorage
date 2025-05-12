@@ -17,4 +17,6 @@ public class FileMetadata
     public required string MimeType { get; set; }
 
     public required DateTimeOffset CreatedAt { get; set; } = DateTimeOffset.UtcNow;
+    
+    public DateTimeOffset? DeletedAt { get; set; }
 }
