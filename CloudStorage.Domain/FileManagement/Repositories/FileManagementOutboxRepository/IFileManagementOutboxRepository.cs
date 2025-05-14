@@ -9,6 +9,8 @@ public interface IFileManagementOutboxRepository
         FileManagementOutbox fileManagementOutbox,
         CancellationToken cancellationToken = default);
 
+    Task<FileManagementOutboxId> AddAsync<TMessage>(TMessage message, CancellationToken cancellationToken = default);
+
     Task<IReadOnlyList<FileManagementOutbox>> GetTopUnprocessedOutboxes(
         GetTopUnprocessedOutboxesModel model,
         CancellationToken cancellationToken = default);

@@ -5,8 +5,8 @@ using CloudStorage.Domain.FileManagement.ValueObjects;
 using CloudStorage.Domain.UserManagement.ValueObjects;
 using CloudStorage.Infrastructure.DataAccess.Persistence.ConnectionFactory;
 using CloudStorage.Infrastructure.DataAccess.Persistence.Migrations;
+using CloudStorage.Infrastructure.DataAccess.Persistence.Repositories.FileManagementOutbox;
 using CloudStorage.Infrastructure.DataAccess.Persistence.Repositories.FileMetadata;
-using CloudStorage.Infrastructure.DataAccess.Persistence.Repositories.FileMetadataDeletedOutbox;
 using Dapper;
 using FluentMigrator.Runner;
 using Microsoft.Extensions.Configuration;
@@ -40,7 +40,7 @@ internal static class PersistenceServiceCollectionExtensions
         .AddScoped<IFileMetadataRepository>(x => x
             .GetRequiredService<IRepositoryFactory<IFileMetadataRepository>>()
             .Create())
-        .AddSingleton<IRepositoryFactory<IFileManagementOutboxRepository>, FileMetadataDeletedOutboxRepositoryFactory>()
+        .AddSingleton<IRepositoryFactory<IFileManagementOutboxRepository>, FileManagementOutboxRepositoryFactory>()
         .AddScoped<IFileManagementOutboxRepository>(x => x
             .GetRequiredService<IRepositoryFactory<IFileManagementOutboxRepository>>()
             .Create());

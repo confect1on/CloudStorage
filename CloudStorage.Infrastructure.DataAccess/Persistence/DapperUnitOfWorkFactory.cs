@@ -1,10 +1,9 @@
 ﻿using CloudStorage.Domain.Abstractions;
 using CloudStorage.Domain.FileManagement;
 using CloudStorage.Domain.FileManagement.Repositories.FileManagementOutboxRepository;
-using CloudStorage.Infrastructure.DataAccess.Persistence;
 using CloudStorage.Infrastructure.DataAccess.Persistence.ConnectionFactory;
 
-namespace CloudStorage.Infrastructure.DataAccess;
+namespace CloudStorage.Infrastructure.DataAccess.Persistence;
 
 internal sealed class DapperUnitOfWorkFactory(
     IRepositoryFactory<IFileMetadataRepository> fileMetadataRepositoryFactory, 

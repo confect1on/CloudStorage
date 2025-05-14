@@ -3,8 +3,10 @@
 namespace CloudStorage.Domain.FileManagement.Entities;
 
 public record FileManagementOutbox(
-    FileManagementOutboxId FileManagementOutboxId,
-    FileMetadataId FileMetadataId,
-    FileManagementOutboxStatus FileManagementOutboxStatus,
-    DateTimeOffset CreatedAt);
+    FileManagementOutboxId Id,
+    string Type,
+    string Content,
+    DateTimeOffset CreatedAt,
+    DateTimeOffset? ProcessedAt,
+    string? ErrorMessage);
 
