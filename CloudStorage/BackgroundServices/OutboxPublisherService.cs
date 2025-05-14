@@ -1,5 +1,4 @@
-﻿using System.Text;
-using CloudStorage.Domain.Abstractions;
+﻿using CloudStorage.Domain.Abstractions;
 
 namespace CloudStorage.BackgroundServices;
 
@@ -10,7 +9,7 @@ internal sealed class OutboxPublisherService(
     {
         while (!stoppingToken.IsCancellationRequested)
         {
-
+            
         }
     }
 }

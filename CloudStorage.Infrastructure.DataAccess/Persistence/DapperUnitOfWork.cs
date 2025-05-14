@@ -1,7 +1,7 @@
 ﻿using CloudStorage.Domain.Abstractions;
+using CloudStorage.Domain.FileManagement;
+using CloudStorage.Domain.FileManagement.Repositories.FileManagementOutboxRepository;
 using CloudStorage.Infrastructure.DataAccess.Persistence.ConnectionFactory;
-using CloudStorage.Infrastructure.DataAccess.Persistence.Repositories.FileMetadata;
-using CloudStorage.Infrastructure.DataAccess.Persistence.Repositories.FileMetadataDeletedOutbox;
 using Npgsql;
 using IsolationLevel = System.Data.IsolationLevel;
 
@@ -9,7 +9,7 @@ namespace CloudStorage.Infrastructure.DataAccess.Persistence;
 
 internal sealed class DapperUnitOfWork(
     IRepositoryFactory<IFileMetadataRepository> fileMetadataRepositoryFactory,
-    IRepositoryFactory<IFileMetadataDeletedOutboxRepository> fileMetadataDeletedOutboxRepositoryFactory,
+    IRepositoryFactory<IFileManagementOutboxRepository> fileMetadataDeletedOutboxRepositoryFactory,
     IConnectionFactory connectionFactory) : IUnitOfWork, IAsyncDisposable
 {
     private NpgsqlConnection? _connection;
@@ -20,7 +20,7 @@ internal sealed class DapperUnitOfWork(
             _connection ?? throw new InvalidOperationException("Connection isn't initialized"),
             _transaction);
     
-    public IFileMetadataDeletedOutboxRepository FileMetadataDeletedOutboxRepository => 
+    public IFileManagementOutboxRepository FileManagementOutboxRepository => 
         fileMetadataDeletedOutboxRepositoryFactory.Create(
             _connection ?? throw new InvalidOperationException("Connection isn't initialized"),
             _transaction);

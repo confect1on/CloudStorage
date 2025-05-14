@@ -1,5 +1,8 @@
 ﻿using CloudStorage.Domain.Abstractions;
-using CloudStorage.Domain.Entities.Ids;
+using CloudStorage.Domain.FileManagement;
+using CloudStorage.Domain.FileManagement.Repositories.FileManagementOutboxRepository;
+using CloudStorage.Domain.FileManagement.ValueObjects;
+using CloudStorage.Domain.UserManagement.ValueObjects;
 using CloudStorage.Infrastructure.DataAccess.Persistence.ConnectionFactory;
 using CloudStorage.Infrastructure.DataAccess.Persistence.Migrations;
 using CloudStorage.Infrastructure.DataAccess.Persistence.Repositories.FileMetadata;
@@ -19,7 +22,7 @@ internal static class PersistenceServiceCollectionExtensions
         SqlMapper.AddTypeHandler(new FileMetadataId.DapperTypeHandler());
         SqlMapper.AddTypeHandler(new StorageId.DapperTypeHandler());
         SqlMapper.AddTypeHandler(new UserId.DapperTypeHandler());
-        SqlMapper.AddTypeHandler(new EventId.DapperTypeHandler());
+        SqlMapper.AddTypeHandler(new FileManagementOutboxId.DapperTypeHandler());
         Dapper.DefaultTypeMap.MatchNamesWithUnderscores = true;
         return services
             .ConfigurePersistence(configuration)
@@ -37,9 +40,9 @@ internal static class PersistenceServiceCollectionExtensions
         .AddScoped<IFileMetadataRepository>(x => x
             .GetRequiredService<IRepositoryFactory<IFileMetadataRepository>>()
             .Create())
-        .AddSingleton<IRepositoryFactory<IFileMetadataDeletedOutboxRepository>, FileMetadataDeletedOutboxRepositoryFactory>()
-        .AddScoped<IFileMetadataDeletedOutboxRepository>(x => x
-            .GetRequiredService<IRepositoryFactory<IFileMetadataDeletedOutboxRepository>>()
+        .AddSingleton<IRepositoryFactory<IFileManagementOutboxRepository>, FileMetadataDeletedOutboxRepositoryFactory>()
+        .AddScoped<IFileManagementOutboxRepository>(x => x
+            .GetRequiredService<IRepositoryFactory<IFileManagementOutboxRepository>>()
             .Create());
 
     internal static IServiceCollection AddUnitOfWorks(this IServiceCollection services) => services

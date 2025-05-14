@@ -1,4 +1,4 @@
-﻿using CloudStorage.Domain.Entities.Ids;
+﻿using CloudStorage.Domain.FileManagement.ValueObjects;
 using MediatR;
 
 namespace CloudStorage.UseCases.GetFile;

@@ -1,16 +1,16 @@
 ﻿using System.Data;
-using CloudStorage.Domain.Abstractions;
-using CloudStorage.Domain.Entities;
-using CloudStorage.Domain.Entities.Ids;
+using CloudStorage.Domain.FileManagement.Entities;
+using CloudStorage.Domain.FileManagement.Repositories.FileManagementOutboxRepository;
+using CloudStorage.Domain.FileManagement.ValueObjects;
 using Dapper;
 
 namespace CloudStorage.Infrastructure.DataAccess.Persistence.Repositories.FileMetadataDeletedOutbox;
 
-internal sealed class FileMetadataDeletedOutboxRepository(
+internal sealed class FileManagementOutboxRepository(
     IDbConnection dbConnection,
-    IDbTransaction? dbTransaction = null) : IFileMetadataDeletedOutboxRepository
+    IDbTransaction? dbTransaction = null) : IFileManagementOutboxRepository
 {
-    public async Task<EventId> AddAsync(FileMetadataOutbox fileMetadataOutbox, CancellationToken cancellationToken = default)
+    public async Task<FileManagementOutboxId> AddAsync(FileManagementOutbox fileManagementOutbox, CancellationToken cancellationToken = default)
     {
         const string sqlQuery =
             """
@@ -20,14 +20,14 @@ internal sealed class FileMetadataDeletedOutboxRepository(
             """;
         var commandDefinition = new CommandDefinition(
             sqlQuery,
-            fileMetadataOutbox,
+            fileManagementOutbox,
             dbTransaction,
             cancellationToken: cancellationToken);
-        var eventId = await dbConnection.QueryFirstAsync<EventId>(commandDefinition);
+        var eventId = await dbConnection.QueryFirstAsync<FileManagementOutboxId>(commandDefinition);
         return eventId;
     }
 
-    public async Task<IReadOnlyList<FileMetadataOutbox>> GetTopUnprocessedOutboxes(
+    public async Task<IReadOnlyList<FileManagementOutbox>> GetTopUnprocessedOutboxes(
         GetTopUnprocessedOutboxesModel model,
         CancellationToken cancellationToken = default)
     {
@@ -44,7 +44,7 @@ internal sealed class FileMetadataDeletedOutboxRepository(
             model,
             dbTransaction,
             cancellationToken: cancellationToken);
-        var outboxes = await dbConnection.QueryAsync<FileMetadataOutbox>(commandDefinition);
+        var outboxes = await dbConnection.QueryAsync<FileManagementOutbox>(commandDefinition);
         return outboxes.ToList();
     }
 }

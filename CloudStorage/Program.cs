@@ -1,10 +1,8 @@
 using CloudStorage.Domain;
-using CloudStorage.Infrastructure;
 using CloudStorage.Infrastructure.DataAccess.Extensions;
 using CloudStorage.Infrastructure.OpenAPI;
 using CloudStorage.UseCases;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 

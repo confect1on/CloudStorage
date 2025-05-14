@@ -1,6 +1,6 @@
 ﻿using StronglyTypedIds;
 
-namespace CloudStorage.Domain.Entities.Ids;
+namespace CloudStorage.Domain.FileManagement.ValueObjects;
 
 [StronglyTypedId(Template.Guid, "guid-dapper")]
 public readonly partial struct FileMetadataId;

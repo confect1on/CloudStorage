@@ -1,7 +1,7 @@
 ﻿using Amazon.S3;
 using Amazon.S3.Model;
-using CloudStorage.Domain.Abstractions;
-using CloudStorage.Domain.Entities.Ids;
+using CloudStorage.Domain.FileManagement.Repositories;
+using CloudStorage.Domain.FileManagement.ValueObjects;
 using Microsoft.Extensions.Options;
 
 namespace CloudStorage.Infrastructure.DataAccess.S3;

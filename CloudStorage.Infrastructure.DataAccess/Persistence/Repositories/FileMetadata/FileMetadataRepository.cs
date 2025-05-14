@@ -1,7 +1,8 @@
 ﻿using System.Data;
 using CloudStorage.Domain.Abstractions;
-using CloudStorage.Domain.Entities.Ids;
-using CloudStorage.Domain.Exceptions;
+using CloudStorage.Domain.FileManagement;
+using CloudStorage.Domain.FileManagement.Exceptions;
+using CloudStorage.Domain.FileManagement.ValueObjects;
 using Dapper;
 
 namespace CloudStorage.Infrastructure.DataAccess.Persistence.Repositories.FileMetadata;
@@ -11,7 +12,7 @@ internal sealed class FileMetadataRepository(
     IDbConnection dbConnection,
     IDbTransaction? dbTransaction = null) : IFileMetadataRepository
 {
-    public async Task<FileMetadataId> AddAsync(Domain.Entities.FileMetadata fileMetadata, CancellationToken cancellationToken = default)
+    public async Task<FileMetadataId> AddAsync(Domain.FileManagement.Entities.FileMetadata fileMetadata, CancellationToken cancellationToken = default)
     {
         const string sqlQuery =
             """
@@ -24,7 +25,7 @@ internal sealed class FileMetadataRepository(
         return fileMetaDataId;
     }
 
-    public async Task<Domain.Entities.FileMetadata> GetByIdAsync(FileMetadataId fileMetadataId, CancellationToken cancellationToken = default)
+    public async Task<Domain.FileManagement.Entities.FileMetadata> GetByIdAsync(FileMetadataId fileMetadataId, CancellationToken cancellationToken = default)
     {
         const string sqlQuery =
             """
@@ -39,7 +40,7 @@ internal sealed class FileMetadataRepository(
             },
             dbTransaction,
             cancellationToken: cancellationToken);
-        var fileMetadata = await dbConnection.QueryFirstOrDefaultAsync<Domain.Entities.FileMetadata>(commandDefinition);
+        var fileMetadata = await dbConnection.QueryFirstOrDefaultAsync<Domain.FileManagement.Entities.FileMetadata>(commandDefinition);
         if (fileMetadata is null)
         {
             throw new FileMetadataNotFoundException(fileMetadataId);

@@ -1,5 +1,5 @@
-﻿using CloudStorage.Domain.Abstractions;
-using CloudStorage.Domain.Exceptions;
+﻿using CloudStorage.Domain.FileManagement;
+using CloudStorage.Domain.FileManagement.Repositories;
 using CloudStorage.UseCases.Mappers;
 using MediatR;
 

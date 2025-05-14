@@ -1,5 +1,5 @@
 ﻿using CloudStorage.Domain.Abstractions;
-using CloudStorage.Domain.Entities.Ids;
+using UserId = CloudStorage.Domain.UserManagement.ValueObjects.UserId;
 
 namespace CloudStorage.Domain.DomainServices;
 

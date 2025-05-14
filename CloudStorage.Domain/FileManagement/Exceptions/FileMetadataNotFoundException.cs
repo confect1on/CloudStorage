@@ -1,5 +1,5 @@
-﻿using CloudStorage.Domain.Entities.Ids;
+﻿using CloudStorage.Domain.FileManagement.ValueObjects;
 
-namespace CloudStorage.Domain.Exceptions;
+namespace CloudStorage.Domain.FileManagement.Exceptions;
 
 public class FileMetadataNotFoundException(FileMetadataId fileMetadataId) : Exception($"File with id {fileMetadataId} not found");

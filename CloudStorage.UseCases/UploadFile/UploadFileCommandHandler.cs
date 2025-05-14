@@ -1,6 +1,8 @@
 ﻿using CloudStorage.Domain.Abstractions;
-using CloudStorage.Domain.Entities;
-using CloudStorage.Domain.Entities.Ids;
+using CloudStorage.Domain.FileManagement;
+using CloudStorage.Domain.FileManagement.Entities;
+using CloudStorage.Domain.FileManagement.Repositories;
+using CloudStorage.Domain.FileManagement.ValueObjects;
 using MediatR;
 
 namespace CloudStorage.UseCases.UploadFile;

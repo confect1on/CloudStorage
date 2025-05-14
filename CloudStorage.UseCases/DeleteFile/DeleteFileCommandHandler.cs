@@ -1,7 +1,6 @@
-﻿using System.Transactions;
-using CloudStorage.Domain.Abstractions;
-using CloudStorage.Domain.Entities;
-using CloudStorage.Domain.Entities.Ids;
+﻿using CloudStorage.Domain.Abstractions;
+using CloudStorage.Domain.FileManagement.Entities;
+using CloudStorage.Domain.FileManagement.ValueObjects;
 using MediatR;
 
 namespace CloudStorage.UseCases.DeleteFile;
@@ -16,12 +15,12 @@ internal sealed class DeleteFileCommandHandler(
         try
         {
             await unitOfWork.FileMetadataRepository.DeleteByIdAsync(request.FileMetadataId, cancellationToken);
-            var fileMetadataDeletedOutbox = new FileMetadataOutbox(
-                EventId.New(),
+            var fileMetadataDeletedOutbox = new FileManagementOutbox(
+                FileManagementOutboxId.New(),
                 request.FileMetadataId,
-                OutboxStatus.Pending,
+                FileManagementOutboxStatus.Pending,
                 dateTimeOffsetProvider.GetUtcNow());
-            await unitOfWork.FileMetadataDeletedOutboxRepository.AddAsync(fileMetadataDeletedOutbox, cancellationToken);
+            await unitOfWork.FileManagementOutboxRepository.AddAsync(fileMetadataDeletedOutbox, cancellationToken);
 
             await unitOfWork.CommitAsync(cancellationToken);
         }

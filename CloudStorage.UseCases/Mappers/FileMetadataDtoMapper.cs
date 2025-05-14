@@ -1,5 +1,4 @@
-﻿using CloudStorage.Domain.Entities;
-using CloudStorage.UseCases.UploadFile;
+﻿using CloudStorage.Domain.FileManagement.Entities;
 
 namespace CloudStorage.UseCases.Mappers;
 

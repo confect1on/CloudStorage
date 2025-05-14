@@ -1,6 +1,6 @@
-﻿using CloudStorage.Domain.Entities.Ids;
+﻿using CloudStorage.Domain.FileManagement.ValueObjects;
 
-namespace CloudStorage.Domain.Abstractions;
+namespace CloudStorage.Domain.FileManagement.Repositories;
 
 public interface IFileStorage
 {

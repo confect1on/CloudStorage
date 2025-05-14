@@ -1,8 +1,7 @@
-﻿using System.Data;
-using CloudStorage.Domain.Entities;
-using CloudStorage.Domain.Entities.Ids;
+﻿using CloudStorage.Domain.FileManagement.Entities;
+using CloudStorage.Domain.FileManagement.ValueObjects;
 
-namespace CloudStorage.Domain.Abstractions;
+namespace CloudStorage.Domain.FileManagement;
 
 public interface IFileMetadataRepository
 {

@@ -1,4 +1,6 @@
 ﻿using System.Data;
+using CloudStorage.Domain.FileManagement;
+using CloudStorage.Domain.FileManagement.Repositories.FileManagementOutboxRepository;
 
 namespace CloudStorage.Domain.Abstractions;
 
@@ -6,7 +8,7 @@ public interface IUnitOfWork : IDisposable
 {
     IFileMetadataRepository FileMetadataRepository { get; }
 
-    IFileMetadataDeletedOutboxRepository FileMetadataDeletedOutboxRepository { get; }
+    IFileManagementOutboxRepository FileManagementOutboxRepository { get; }
 
     Task BeginTransactionAsync(
         IsolationLevel isolationLevel = IsolationLevel.ReadCommitted,

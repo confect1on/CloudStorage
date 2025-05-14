@@ -1,19 +1,20 @@
 ﻿using System.Data;
 using CloudStorage.Domain.Abstractions;
+using CloudStorage.Domain.FileManagement.Repositories.FileManagementOutboxRepository;
 using CloudStorage.Infrastructure.DataAccess.Persistence.ConnectionFactory;
 
 namespace CloudStorage.Infrastructure.DataAccess.Persistence.Repositories.FileMetadataDeletedOutbox;
 
-internal sealed class FileMetadataDeletedOutboxRepositoryFactory(IConnectionFactory connectionFactory) : IRepositoryFactory<IFileMetadataDeletedOutboxRepository>
+internal sealed class FileMetadataDeletedOutboxRepositoryFactory(IConnectionFactory connectionFactory) : IRepositoryFactory<IFileManagementOutboxRepository>
 {
-    public IFileMetadataDeletedOutboxRepository Create(IDbConnection dbConnection, IDbTransaction? transaction = null)
+    public IFileManagementOutboxRepository Create(IDbConnection dbConnection, IDbTransaction? transaction = null)
     {
-        return new FileMetadataDeletedOutboxRepository(dbConnection, transaction);
+        return new FileManagementOutboxRepository(dbConnection, transaction);
     }
 
-    public IFileMetadataDeletedOutboxRepository Create()
+    public IFileManagementOutboxRepository Create()
     {
         var connection = connectionFactory.Create();
-        return new FileMetadataDeletedOutboxRepository(connection);
+        return new FileManagementOutboxRepository(connection);
     }
 }
