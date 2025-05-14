@@ -1,9 +1,9 @@
 ﻿using FluentMigrator;
 
-namespace CloudStorage.Infrastructure.DataAccess.Migrations;
+namespace CloudStorage.Infrastructure.DataAccess.Persistence.Migrations;
 
 [Migration(1, TransactionBehavior.None)]
-public class AddFileMetadataTable : Migration
+public sealed class AddFileMetadataTable : Migration
 {
     public override void Up()
     {

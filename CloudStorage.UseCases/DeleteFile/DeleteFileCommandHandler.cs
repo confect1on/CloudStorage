@@ -1,14 +1,34 @@
-﻿using CloudStorage.Domain.Abstractions;
+﻿using System.Transactions;
+using CloudStorage.Domain.Abstractions;
+using CloudStorage.Domain.Entities;
+using CloudStorage.Domain.Entities.Ids;
 using MediatR;
 
 namespace CloudStorage.UseCases.DeleteFile;
 
 internal sealed class DeleteFileCommandHandler(
-    IFileMetadataRepository fileMetadataRepository) : IRequestHandler<DeleteFileCommand>
+    IUnitOfWork unitOfWork,
+    IDateTimeOffsetProvider dateTimeOffsetProvider) : IRequestHandler<DeleteFileCommand>
 {
     public async Task Handle(DeleteFileCommand request, CancellationToken cancellationToken)
     {
-        // TODO: add validator that current user has rights to delete
-        await fileMetadataRepository.DeleteByIdAsync(request.FileMetadataId, cancellationToken);
+        await unitOfWork.BeginTransactionAsync(cancellationToken: cancellationToken);
+        try
+        {
+            await unitOfWork.FileMetadataRepository.DeleteByIdAsync(request.FileMetadataId, cancellationToken);
+            var fileMetadataDeletedOutbox = new FileMetadataOutbox(
+                EventId.New(),
+                request.FileMetadataId,
+                OutboxStatus.Pending,
+                dateTimeOffsetProvider.GetUtcNow());
+            await unitOfWork.FileMetadataDeletedOutboxRepository.AddAsync(fileMetadataDeletedOutbox, cancellationToken);
+
+            await unitOfWork.CommitAsync(cancellationToken);
+        }
+        catch
+        {
+            await unitOfWork.RollbackAsync(cancellationToken);
+            throw;
+        }
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace CloudStorage.Infrastructure.DataAccess;
+﻿namespace CloudStorage.Infrastructure.DataAccess.Persistence;
 
 public record DalSettings
 {

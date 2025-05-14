@@ -1,9 +1,9 @@
 ﻿using FluentMigrator;
 
-namespace CloudStorage.Infrastructure.DataAccess.Migrations;
+namespace CloudStorage.Infrastructure.DataAccess.Persistence.Migrations;
 
 [Migration(2, TransactionBehavior.None)]
-public class AddDeletedAtToFileMetadataTable : Migration
+public sealed class AddDeletedAtToFileMetadataTable : Migration
 {
     public override void Up()
     {

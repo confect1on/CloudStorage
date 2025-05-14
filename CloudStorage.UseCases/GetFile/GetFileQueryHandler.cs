@@ -12,7 +12,7 @@ internal sealed class GetFileQueryHandler(
     public async Task<GetFileQueryResult> Handle(GetFileQuery request, CancellationToken cancellationToken)
     {
         var fileMetadata = await fileMetadataRepository.GetByIdAsync(request.FileMetadataId, cancellationToken);
-        var storageId = fileMetadata.StorageId ?? throw new FileMetadataNotFoundException(request.FileMetadataId);
+        var storageId = fileMetadata.StorageId ?? throw new StorageIsNotAttachedToMetadataException(request.FileMetadataId);
         var fileStream = await fileStorage.DownloadFileAsync(storageId, cancellationToken);
         return new GetFileQueryResult(fileStream, fileMetadata.MapToFileMetadataDto());
     }

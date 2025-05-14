@@ -29,4 +29,13 @@ internal sealed class S3FileStorage(IAmazonS3 amazonS3, IOptions<S3FileStorageSe
     {
         return amazonS3.GetObjectStreamAsync(options.Value.S3Bucket, storageId.ToString(), null, cancellationToken);
     }
+
+    public async Task DeleteFileAsync(StorageId storageId, CancellationToken cancellationToken = default)
+    {
+        var result = await amazonS3.DeleteObjectAsync(options.Value.S3Bucket, storageId.ToString(), null, cancellationToken);
+        if (result.HttpStatusCode != System.Net.HttpStatusCode.OK)
+        {
+            throw new FileNotDeletedException(result);
+        }
+    }
 }

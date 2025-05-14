@@ -42,7 +42,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI(opt => opt.SwaggerEndpoint("/openapi/v1.json", "Cloud Storage API"));
 }
 
-app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 

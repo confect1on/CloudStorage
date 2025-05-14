@@ -1,30 +1,31 @@
-﻿using CloudStorage.Domain.Abstractions;
-using CloudStorage.Domain.Entities;
+﻿using System.Data;
+using CloudStorage.Domain.Abstractions;
 using CloudStorage.Domain.Entities.Ids;
 using CloudStorage.Domain.Exceptions;
 using Dapper;
-using Microsoft.Extensions.Options;
 
-namespace CloudStorage.Infrastructure.DataAccess;
+namespace CloudStorage.Infrastructure.DataAccess.Persistence.Repositories.FileMetadata;
 
-internal sealed class FileMetadataRepository(IOptions<DalSettings> dalOptions) : PostgresRepository(dalOptions.Value), IFileMetadataRepository
+internal sealed class FileMetadataRepository(
+    IDateTimeOffsetProvider dateTimeOffsetProvider,
+    IDbConnection dbConnection,
+    IDbTransaction? dbTransaction = null) : IFileMetadataRepository
 {
-    public async Task<FileMetadataId> AddAsync(FileMetadata fileMetadata, CancellationToken cancellationToken = default)
+    public async Task<FileMetadataId> AddAsync(Domain.Entities.FileMetadata fileMetadata, CancellationToken cancellationToken = default)
     {
-        await using var connection = await GetConnectionAsync();
         const string sqlQuery =
             """
             insert into file_metadata (id, user_id, storage_id, file_name, file_size_in_bytes, mime_type, created_at)
             values (@Id, @UserId, @StorageId, @FileName, @FileSizeInBytes, @MimeType, @CreatedAt)
             returning id;
             """;
-        var fileMetaDataId = await connection.QueryFirstAsync<FileMetadataId>(sqlQuery, fileMetadata);
+        var commandDefinition = new CommandDefinition(sqlQuery, fileMetadata, dbTransaction, cancellationToken: cancellationToken);
+        var fileMetaDataId = await dbConnection.QueryFirstAsync<FileMetadataId>(commandDefinition);
         return fileMetaDataId;
     }
 
-    public async Task<FileMetadata> GetByIdAsync(FileMetadataId fileMetadataId, CancellationToken cancellationToken = default)
+    public async Task<Domain.Entities.FileMetadata> GetByIdAsync(FileMetadataId fileMetadataId, CancellationToken cancellationToken = default)
     {
-        await using var connection = await GetConnectionAsync();
         const string sqlQuery =
             """
             select id, user_id, storage_id, file_name, file_size_in_bytes, mime_type, created_at
@@ -36,8 +37,9 @@ internal sealed class FileMetadataRepository(IOptions<DalSettings> dalOptions) :
             {
                 Id = fileMetadataId
             },
+            dbTransaction,
             cancellationToken: cancellationToken);
-        var fileMetadata = await connection.QueryFirstOrDefaultAsync<FileMetadata>(commandDefinition);
+        var fileMetadata = await dbConnection.QueryFirstOrDefaultAsync<Domain.Entities.FileMetadata>(commandDefinition);
         if (fileMetadata is null)
         {
             throw new FileMetadataNotFoundException(fileMetadataId);
@@ -45,9 +47,8 @@ internal sealed class FileMetadataRepository(IOptions<DalSettings> dalOptions) :
         return fileMetadata;
     }
 
-    public async Task AttachStorageIdAsync(FileMetadataId fileMetadataId, StorageId storageId, CancellationToken cancellationToken = default)
+    public async Task AttachStorageIdAsync(FileMetadataId fileMetadataId, StorageId? storageId, CancellationToken cancellationToken = default)
     {
-        await using var connection = await GetConnectionAsync();
         const string sqlQuery =
             """
             update file_metadata
@@ -61,8 +62,9 @@ internal sealed class FileMetadataRepository(IOptions<DalSettings> dalOptions) :
                 Id = fileMetadataId,
                 StorageId = storageId
             },
+            dbTransaction,
             cancellationToken: cancellationToken);
-        var rows = await connection.ExecuteAsync(command);
+        var rows = await dbConnection.ExecuteAsync(command);
         if (rows == 0)
         {
             throw new FileMetadataNotFoundException(fileMetadataId);
@@ -71,20 +73,21 @@ internal sealed class FileMetadataRepository(IOptions<DalSettings> dalOptions) :
 
     public async Task DeleteByIdAsync(FileMetadataId fileMetadataId, CancellationToken cancellationToken = default)
     {
-        await using var connection = await GetConnectionAsync();
         const string sqlQuery =
             """
-            delete from file_metadata
-            where id = @Id;
+            update file_metadata
+            set deleted_at = @DeletedAt
+            where id = @Id
             """;
         var command = new CommandDefinition(
             sqlQuery,
             new
             {
+                DeletedAt = dateTimeOffsetProvider.GetUtcNow(),
                 Id = fileMetadataId
             },
             cancellationToken: cancellationToken);
-        var rows = await connection.ExecuteAsync(command);
+        var rows = await dbConnection.ExecuteAsync(command);
         if (rows == 0)
         {
             throw new FileMetadataNotFoundException(fileMetadataId);

@@ -1,4 +1,5 @@
-﻿using CloudStorage.Domain.Entities;
+﻿using System.Data;
+using CloudStorage.Domain.Entities;
 using CloudStorage.Domain.Entities.Ids;
 
 namespace CloudStorage.Domain.Abstractions;
@@ -9,7 +10,9 @@ public interface IFileMetadataRepository
     
     Task<FileMetadata> GetByIdAsync(FileMetadataId fileMetadataId, CancellationToken cancellationToken = default);
     
-    Task AttachStorageIdAsync(FileMetadataId fileMetadataId, StorageId storageId, CancellationToken cancellationToken = default);
+    Task AttachStorageIdAsync(FileMetadataId fileMetadataId, StorageId? storageId, CancellationToken cancellationToken = default);
     
-    Task DeleteByIdAsync(FileMetadataId fileMetadataId, CancellationToken cancellationToken = default);
+    Task DeleteByIdAsync(
+        FileMetadataId fileMetadataId,
+        CancellationToken cancellationToken = default);
 }
