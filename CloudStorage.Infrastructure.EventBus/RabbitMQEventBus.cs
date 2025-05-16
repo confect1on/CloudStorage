@@ -9,9 +9,8 @@ namespace CloudStorage.Infrastructure.EventBus;
 
 internal sealed class RabbitMqEventBus(IOptions<EventBusSettings> options) : IEventBus
 {
-    public async Task PublishAsync(IDomainEvent message, CancellationToken cancellationToken = default)
+    public async Task PublishAsync(IDomainEvent @event, CancellationToken cancellationToken = default)
     {
-        var routingKey = message.GetType().Name;
         var createChannelOptions = new CreateChannelOptions(
             publisherConfirmationsEnabled: true,
             publisherConfirmationTrackingEnabled: false);
@@ -24,37 +23,26 @@ internal sealed class RabbitMqEventBus(IOptions<EventBusSettings> options) : IEv
         };
         await using var connection = await connectionFactory.CreateConnectionAsync(cancellationToken); 
         await using var channel = await connection.CreateChannelAsync(createChannelOptions, cancellationToken);
+        await channel.QueueDeclareAsync(
+            queue: @event.EventGroup,
+            durable: true,
+            exclusive: false,
+            autoDelete: false,
+            cancellationToken: cancellationToken);
         var exchangeName = options.Value.ExchangeName;
-        await channel.ExchangeDeclareAsync(exchange: exchangeName, type: "direct", cancellationToken: cancellationToken);
-
-        var body = Encoding.UTF8.GetBytes(JsonSerializer.Serialize(message));
+        await channel.QueueBindAsync(
+            queue: @event.EventGroup,
+            exchange: exchangeName,
+            routingKey: @event.Key,
+            cancellationToken: cancellationToken
+            );
+        var body = Encoding.UTF8.GetBytes(JsonSerializer.Serialize(@event));
         await channel.BasicPublishAsync(
             exchange: exchangeName,
-            routingKey: routingKey,
+            routingKey: @event.Key,
             mandatory: true,
             basicProperties: new BasicProperties(),
             body: body,
             cancellationToken: cancellationToken);
-    }
-
-    public async Task PublishBatchAsync(IEnumerable<IDomainEvent> events, CancellationToken cancellationToken = default)
-    {
-        var createChannelOptions = new CreateChannelOptions(
-            publisherConfirmationsEnabled: true,
-            publisherConfirmationTrackingEnabled: false);
-        var connectionFactory = new ConnectionFactory
-        {
-            HostName = options.Value.HostName,
-        };
-        await using var connection = await connectionFactory.CreateConnectionAsync(cancellationToken); 
-        await using var channel = await connection.CreateChannelAsync(createChannelOptions, cancellationToken);
-        var exchangeName = options.Value.ExchangeName;
-        
-        foreach (var @event in events)
-        {
-            var routingKey = @event.GetType().Name;
-            var body = Encoding.UTF8.GetBytes(JsonSerializer.Serialize(@event));
-            await channel.BasicPublishAsync(exchangeName, routingKey, true, new BasicProperties(), body: body, cancellationToken);
-        }
     }
 }

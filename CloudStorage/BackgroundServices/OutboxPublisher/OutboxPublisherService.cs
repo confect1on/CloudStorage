@@ -4,12 +4,15 @@ using System.Text.Json;
 using CloudStorage.Domain;
 using CloudStorage.Domain.Abstractions;
 using CloudStorage.Domain.FileManagement.Repositories.FileManagementOutboxRepository;
+using Microsoft.Extensions.Options;
 
-namespace CloudStorage.BackgroundServices;
+namespace CloudStorage.BackgroundServices.OutboxPublisher;
 
 internal sealed class OutboxPublisherService(
     IUnitOfWorkFactory unitOfWorkFactory,
-    IEventBus eventBus) : BackgroundService
+    IEventBus eventBus,
+    IOptions<OutboxPublisherSettings> options,
+    ILogger<OutboxPublisherService> logger) : BackgroundService
 {
     private readonly Assembly _domainEventsAssembly = typeof(IDomainEvent).Assembly;
     protected async override Task ExecuteAsync(CancellationToken stoppingToken)
@@ -18,7 +21,7 @@ internal sealed class OutboxPublisherService(
         while (!stoppingToken.IsCancellationRequested)
         {
             using var unitOfWork = unitOfWorkFactory.Create();
-            var model = new GetTopUnprocessedOutboxesModel(100);
+            var model = new GetTopUnprocessedOutboxesModel(options.Value.BatchSize);
             await unitOfWork.BeginTransactionAsync(IsolationLevel.RepeatableRead, stoppingToken);
             var outboxes = await unitOfWork.FileManagementOutboxRepository
                 .GetTopUnprocessedAsync(model, stoppingToken);
@@ -39,6 +42,7 @@ internal sealed class OutboxPublisherService(
                 }
                 finally
                 {
+                    logger.LogDebug("Outbox with id {OutboxId} has been processed", outbox.Id);
                     await unitOfWork.CommitAsync(stoppingToken);
                 }
             }

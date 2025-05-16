@@ -8,5 +8,6 @@ public static class EventBusServiceCollectionExtensions
 {
     public static IServiceCollection AddEventBus(this IServiceCollection services, IConfiguration configuration) => services
         .Configure<EventBusSettings>(configuration.GetSection(nameof(EventBusSettings)))
+        .AddAsyncInitializer<EventBusAsyncInitializer>()
         .AddSingleton<IEventBus, RabbitMqEventBus>();
 }

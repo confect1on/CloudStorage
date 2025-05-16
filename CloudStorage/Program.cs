@@ -1,4 +1,5 @@
 using CloudStorage.BackgroundServices;
+using CloudStorage.BackgroundServices.OutboxPublisher;
 using CloudStorage.Domain;
 using CloudStorage.Infrastructure.Persistence.Extensions;
 using CloudStorage.Infrastructure.EventBus;
@@ -19,7 +20,8 @@ builder.Services
     .AddEventBus(builder.Configuration)
     .AddCloudStorageUseCases();
 
-builder.Services.AddHostedService<OutboxPublisherService>();
+builder.Services
+    .AddOutboxPublisher(builder.Configuration);
 builder.Services
     .AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi

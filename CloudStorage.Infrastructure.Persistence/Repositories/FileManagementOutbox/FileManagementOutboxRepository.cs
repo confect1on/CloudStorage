@@ -88,7 +88,8 @@ internal sealed class FileManagementOutboxRepository(
         const string sqlQuery =
             """
             update file_management_outbox
-            set processed_at = @ProcessedAt
+            set processed_at = @ProcessedAt,
+                error_message = null
             where id = @Id
             """;
         var commandDefinition = new CommandDefinition(

@@ -3,8 +3,6 @@
 public interface IEventBus
 {
     Task PublishAsync(
-        IDomainEvent message,
+        IDomainEvent @event,
         CancellationToken cancellationToken = default);
-    
-    Task PublishBatchAsync(IEnumerable<IDomainEvent> events, CancellationToken cancellationToken = default);
 }
