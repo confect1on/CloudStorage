@@ -1,6 +1,9 @@
+using CloudStorage.BackgroundServices;
 using CloudStorage.Domain;
-using CloudStorage.Infrastructure.DataAccess.Extensions;
+using CloudStorage.Infrastructure.Persistence.Extensions;
+using CloudStorage.Infrastructure.EventBus;
 using CloudStorage.Infrastructure.OpenAPI;
+using CloudStorage.Infrastructure.S3Storage;
 using CloudStorage.UseCases;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 
@@ -11,9 +14,12 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services
     .AddAsyncInitialization()
     .AddDomainServices()
-    .AddDataAccessInfrastructure(builder.Configuration)
+    .AddPersistence(builder.Configuration)
+    .AddS3Storage(builder.Configuration)
+    .AddEventBus(builder.Configuration)
     .AddCloudStorageUseCases();
 
+builder.Services.AddHostedService<OutboxPublisherService>();
 builder.Services
     .AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi

@@ -11,7 +11,15 @@ public interface IFileManagementOutboxRepository
 
     Task<FileManagementOutboxId> AddAsync<TMessage>(TMessage message, CancellationToken cancellationToken = default);
 
-    Task<IReadOnlyList<FileManagementOutbox>> GetTopUnprocessedOutboxes(
+    Task<IReadOnlyList<FileManagementOutbox>> GetTopUnprocessedAsync(
         GetTopUnprocessedOutboxesModel model,
+        CancellationToken cancellationToken = default);
+    
+    Task SetErrorMessageAsync(
+        SetErrorMessageModel model,
+        CancellationToken cancellationToken = default);
+    
+    Task MarkProcessedAsync(
+        MarkProcessedModel model,
         CancellationToken cancellationToken = default);
 }

@@ -5,4 +5,4 @@ namespace CloudStorage.Domain.FileManagement.DomainEvents;
 public record FileDeletedEvent(
     EventId Id,
     DateTimeOffset CreatedAt,
-    FileMetadataId AggregateId) : IDomainEvent<FileMetadataId>;
+    FileMetadataId AggregateId) : IDomainEvent;
