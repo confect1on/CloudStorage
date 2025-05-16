@@ -1,17 +1,22 @@
-﻿using CloudStorage.Domain.Abstractions;
+﻿using System.Data;
+using CloudStorage.Domain;
+using CloudStorage.Domain.Abstractions;
 using CloudStorage.Domain.FileManagement;
+using CloudStorage.Domain.FileManagement.DomainEvents;
 using CloudStorage.Domain.FileManagement.Entities;
 using CloudStorage.Domain.FileManagement.Repositories;
+using CloudStorage.Domain.FileManagement.Repositories.FileManagementOutboxRepository;
 using CloudStorage.Domain.FileManagement.ValueObjects;
 using MediatR;
 
 namespace CloudStorage.UseCases.UploadFile;
 
 internal sealed class UploadFileCommandHandler(
-    IFileMetadataRepository fileMetadataRepository,
+    IUnitOfWork uow,
     IDateTimeOffsetProvider dateTimeOffsetProvider,
     IUserAccessor userAccessor,
-    IFileStorage fileStorage) : IRequestHandler<UploadFileCommand, UploadFileCommandResult>
+    IFileStorage fileStorage,
+    ITemporaryFileStorage temporaryFileStorage) : IRequestHandler<UploadFileCommand, UploadFileCommandResult>
 {
     public async Task<UploadFileCommandResult> Handle(UploadFileCommand request, CancellationToken cancellationToken)
     {
@@ -24,11 +29,25 @@ internal sealed class UploadFileCommandHandler(
             CreatedAt = dateTimeOffsetProvider.GetUtcNow(),
             UserId = userAccessor.GetCurrentUserId(),
         };
-        var fileMetadataId = await fileMetadataRepository.AddAsync(fileMetadata, cancellationToken);
-        // TODO: add checking StorageQuota
-        // TODO: replace by outbox-pattern
-        var storageId = await fileStorage.UploadFile(request.FileStream, cancellationToken);
-        await fileMetadataRepository.AttachStorageIdAsync(fileMetadataId, storageId, cancellationToken);
-        return new UploadFileCommandResult(fileMetadataId);
+        await uow.BeginTransactionAsync(IsolationLevel.ReadCommitted, cancellationToken);
+        try
+        {
+            // TODO: add checking StorageQuota
+            var temporaryStorageId = await temporaryFileStorage.UploadFile(request.FileStream, cancellationToken);
+            var fileMetadataId = await uow.FileMetadataRepository.AddAsync(fileMetadata, cancellationToken);
+            var fileCreatedEvent = new FileCreatedEvent(
+                EventId.New(),
+                dateTimeOffsetProvider.GetUtcNow(),
+                fileMetadataId,
+                temporaryStorageId);
+            await uow.FileManagementOutboxRepository.AddAsync(fileCreatedEvent, cancellationToken);
+            await uow.CommitAsync(cancellationToken);
+            return new UploadFileCommandResult(fileMetadataId);
+        }
+        catch (Exception)
+        {
+            await uow.RollbackAsync(cancellationToken);
+            throw;
+        }
     }
 }

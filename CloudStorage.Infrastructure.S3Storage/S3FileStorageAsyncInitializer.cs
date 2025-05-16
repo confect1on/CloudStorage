@@ -11,9 +11,15 @@ internal sealed class S3FileStorageAsyncInitializer(
 {
     public async Task InitializeAsync(CancellationToken cancellationToken)
     {
+        await CreateBucketIfNotExists(options.Value.S3Bucket);
+        await CreateBucketIfNotExists(options.Value.TemporaryS3Bucket);
+    }
+
+    private async Task CreateBucketIfNotExists(string bucketName)
+    {
         try
         {
-            await amazonS3.EnsureBucketExistsAsync(options.Value.S3Bucket);
+            await amazonS3.EnsureBucketExistsAsync(bucketName);
         }
         catch (BucketAlreadyOwnedByYouException)
         {

@@ -24,6 +24,7 @@ public static class S3ServiceCollectionExtensions
             .AddDefaultAWSOptions(configuration.GetAWSOptions($"{nameof(S3FileStorageSettings)}:AWS"))
             .AddAWSService<IAmazonS3>()
             .AddSingleton<IFileStorage, S3FileStorage>()
+            .AddSingleton<ITemporaryFileStorage, S3FileStorage>()
             .AddAsyncInitializer<S3FileStorageAsyncInitializer>();
     }
 }

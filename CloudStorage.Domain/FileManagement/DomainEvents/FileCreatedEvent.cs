@@ -2,12 +2,12 @@
 
 namespace CloudStorage.Domain.FileManagement.DomainEvents;
 
-public record FileDeletedEvent(
+public record FileCreatedEvent(
     EventId Id,
     DateTimeOffset CreatedAt,
-    FileMetadataId AggregateId) : IDomainEvent
+    FileMetadataId AggregateId,
+    TemporaryStorageId TemporaryStorageId) : IDomainEvent
 {
     public string EventGroup => $"files.{AggregateId}";
-
-    public string EventType => "deleted";
+    public string EventType => "created";
 }
