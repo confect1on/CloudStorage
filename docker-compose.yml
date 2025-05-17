@@ -18,7 +18,16 @@ services:
     environment:
       - MINIO_ROOT_USER=minio-root-user
       - MINIO_ROOT_PASSWORD=minio-root-password
-  
+  av-scanner-db:
+    image: postgres
+    restart: always
+    container_name: av-scanner-db
+    environment:
+      - "POSTGRES_USER=postgres"
+      - "POSTGRES_DB=av-scanner-service"
+      - "POSTGRES_HOST_AUTH_METHOD=trust"
+    ports:
+      - "15433:5432"
   rabbitmq:
     image: rabbitmq:4.1.0-management
     hostname: rabbitmq
