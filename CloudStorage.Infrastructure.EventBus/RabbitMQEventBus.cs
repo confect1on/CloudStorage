@@ -24,19 +24,18 @@ internal sealed class RabbitMqEventBus(IOptions<EventBusSettings> options) : IEv
         await using var connection = await connectionFactory.CreateConnectionAsync(cancellationToken); 
         await using var channel = await connection.CreateChannelAsync(createChannelOptions, cancellationToken);
         await channel.QueueDeclareAsync(
-            queue: @event.EventGroup,
+            queue: @event.Key,
             durable: true,
             exclusive: false,
             autoDelete: false,
             cancellationToken: cancellationToken);
         var exchangeName = options.Value.ExchangeName;
         await channel.QueueBindAsync(
-            queue: @event.EventGroup,
+            queue: @event.Key,
             exchange: exchangeName,
             routingKey: @event.Key,
-            cancellationToken: cancellationToken
-            );
-        var body = Encoding.UTF8.GetBytes(JsonSerializer.Serialize(@event));
+            cancellationToken: cancellationToken);
+        var body = Encoding.UTF8.GetBytes(JsonSerializer.Serialize(@event, @event.GetType()));
         await channel.BasicPublishAsync(
             exchange: exchangeName,
             routingKey: @event.Key,

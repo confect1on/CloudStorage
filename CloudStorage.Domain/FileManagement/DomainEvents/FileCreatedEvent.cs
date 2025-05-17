@@ -8,6 +8,6 @@ public record FileCreatedEvent(
     FileMetadataId AggregateId,
     TemporaryStorageId TemporaryStorageId) : IDomainEvent
 {
-    public string EventGroup => $"files.{AggregateId}";
+    public string EventGroup => $"files";
     public string EventType => "created";
 }

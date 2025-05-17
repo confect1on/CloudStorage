@@ -7,7 +7,7 @@ public record FileDeletedEvent(
     DateTimeOffset CreatedAt,
     FileMetadataId AggregateId) : IDomainEvent
 {
-    public string EventGroup => $"files.{AggregateId}";
+    public string EventGroup => "files";
 
     public string EventType => "deleted";
 }
