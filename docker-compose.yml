@@ -1,0 +1,31 @@
+services:
+  postgresql:
+    image: postgres
+    restart: always
+    container_name: local-postgres
+    environment:
+      - "POSTGRES_USER=postgres"
+      - "POSTGRES_DB=cloud-storage"
+      - "POSTGRES_HOST_AUTH_METHOD=trust"
+    ports:
+      - "15432:5432"
+  minio:
+    image: 'bitnami/minio:latest'
+    restart: always
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    environment:
+      - MINIO_ROOT_USER=minio-root-user
+      - MINIO_ROOT_PASSWORD=minio-root-password
+  
+  rabbitmq:
+    image: rabbitmq:4.1.0-management
+    hostname: rabbitmq
+    restart: always
+    environment:
+      - RABBITMQ_DEFAULT_USER=rmuser
+      - RABBITMQ_DEFAULT_PASS=rmpassword
+    ports:
+      - "5672:5672"
+      - "15672:15672"
