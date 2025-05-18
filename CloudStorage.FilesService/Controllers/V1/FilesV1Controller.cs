@@ -6,7 +6,7 @@ using CloudStorage.UseCases.UploadFile;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CloudStorage.Controllers.V1;
+namespace CloudStorage.FilesService.Controllers.V1;
 
 [ApiController]
 [Route("/api/v1/files")]

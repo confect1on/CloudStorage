@@ -6,7 +6,7 @@ using CloudStorage.Domain.Abstractions;
 using CloudStorage.Domain.FileManagement.Repositories.FileManagementOutboxRepository;
 using Microsoft.Extensions.Options;
 
-namespace CloudStorage.BackgroundServices.OutboxPublisher;
+namespace CloudStorage.FilesService.BackgroundServices.OutboxPublisher;
 
 internal sealed class OutboxPublisherService(
     IUnitOfWorkFactory unitOfWorkFactory,

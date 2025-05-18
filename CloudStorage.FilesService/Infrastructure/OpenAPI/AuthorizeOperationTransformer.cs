@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.OpenApi;
 using Microsoft.OpenApi.Models;
 
-namespace CloudStorage.Infrastructure.OpenAPI;
+namespace CloudStorage.FilesService.Infrastructure.OpenAPI;
 
 internal sealed class AuthorizeOperationTransformer : IOpenApiOperationTransformer
 {

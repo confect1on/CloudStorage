@@ -1,4 +1,4 @@
-﻿namespace CloudStorage.BackgroundServices.OutboxPublisher;
+﻿namespace CloudStorage.FilesService.BackgroundServices.OutboxPublisher;
 
 public record OutboxPublisherSettings
 {

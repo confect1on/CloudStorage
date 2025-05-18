@@ -1,15 +1,16 @@
-using CloudStorage.BackgroundServices;
-using CloudStorage.BackgroundServices.OutboxPublisher;
 using CloudStorage.Domain;
-using CloudStorage.Infrastructure.Persistence.Extensions;
+using CloudStorage.FilesService.BackgroundServices.OutboxPublisher;
+using CloudStorage.FilesService.Infrastructure.OpenAPI;
 using CloudStorage.Infrastructure.EventBus;
-using CloudStorage.Infrastructure.OpenAPI;
+using CloudStorage.Infrastructure.Persistence.Extensions;
 using CloudStorage.Infrastructure.S3Storage;
+using CloudStorage.ServiceDefaults;
 using CloudStorage.UseCases;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.AddServiceDefaults();
 // Add services to the container.
 
 builder.Services
