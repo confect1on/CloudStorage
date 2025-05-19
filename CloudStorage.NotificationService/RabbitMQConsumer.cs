@@ -1,5 +1,8 @@
 using System.Text;
+using System.Text.Json;
+using CloudStorage.NotificationService.EventBus;
 using CloudStorage.NotificationService.Persistence;
+using CloudStorage.NotificationService.Persistence.Repositories;
 using Dapper;
 using Microsoft.Extensions.Options;
 using Npgsql;
@@ -8,8 +11,8 @@ using RabbitMQ.Client.Events;
 
 namespace CloudStorage.NotificationService;
 
-public class Worker(
-    ILogger<Worker> logger,
+public class RabbitMQConsumer(
+    ILogger<RabbitMQConsumer> logger,
     IConnection rabbitMqConnection,
     IOptions<RabbitMqSettings> rabbitMqSettings,
     IOptions<PersistenceSettings> dbSettings)
@@ -37,23 +40,28 @@ public class Worker(
                 await connection.OpenAsync(stoppingToken);
                     
                 var body = ea.Body.ToArray();
-                var message = Encoding.UTF8.GetString(body);
-                logger.LogInformation("Received message: {message}", message);
 
-                var inboxMessage = new InboxMessage
+                var filePublishedEvent = JsonSerializer.Deserialize<FilePublishedEventDto>(body)
+                    ?? throw new InvalidOperationException("");
+                var filePublishedEventOutbox = new FilePublishedInboxDto
                 {
-                    Id = Guid.NewGuid(),
-                    Body = message,
-                    ReceivedAt = DateTime.UtcNow
+                    Id = filePublishedEvent.Id,
+                    CreatedAt = filePublishedEvent.CreatedAt,
+                    FileMetadataId = filePublishedEvent.FileMetadataId,
+                    ReceivedAt = DateTimeOffset.UtcNow, // TODO create provider
                 };
-
                 const string sql =
                     """
-                    INSERT INTO inbox_messages (id, body, received_at)
-                    VALUES (@Id, @Body, @ReceivedAt)
+                    insert into file_published_event_inbox 
+                        (id, created_at, file_metadata_id, received_at, processing_at, processed_at, version)
+                    values (@Id, @CreatedAt, @FileMetadataId, @ReceivedAt, @ProcessingAt, @ProcessedAt, @Version)
+                    on conflict do nothing;
                     """;
-                    
-                await connection.ExecuteAsync(sql, inboxMessage);
+                var commandDefinition = new CommandDefinition(
+                    sql,
+                    filePublishedEventOutbox,
+                    cancellationToken: stoppingToken);
+                await connection.ExecuteAsync(commandDefinition);
 
                 await channel.BasicAckAsync(ea.DeliveryTag, false, stoppingToken);
                 logger.LogInformation("Message processed successfully");
@@ -80,20 +88,4 @@ public class Worker(
         rabbitMqConnection?.Dispose();
         await base.StopAsync(cancellationToken);
     }
-}
-
-// Настройки базы данных
-
-// Настройки RabbitMQ
-public class RabbitMqSettings
-{
-    public string QueueName { get; set; }
-}
-
-// Модель для таблицы inbox
-public class InboxMessage
-{
-    public Guid Id { get; set; }
-    public string Body { get; set; }
-    public DateTime ReceivedAt { get; set; }
 }
