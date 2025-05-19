@@ -4,30 +4,24 @@ using CloudStorage.AppHost;
 var builder = DistributedApplication.CreateBuilder(args);
 
 var minioProfile = "local-minio-profile";
-var awsProfile = builder
-    .AddAWSSDKConfig()
-    .WithProfile(minioProfile);
 var awsConfig = builder
     .AddAWSSDKConfig()
     .WithProfile(minioProfile)
     .WithRegion(RegionEndpoint.USWest1);
 
-var postgres = builder
-    .AddPostgres("postgres")
-    .WithPgAdmin();
-var filesServiceDb = postgres
-    .AddDatabase("files-service-db");
+var postgres = builder.AddPostgres();
+var rabbitMq = builder.AddRabbitMQ();
+var minioS3 = builder.AddMinioS3();
 
-var rabbitMq = builder
-    .AddRabbitMQ("rabbitmq")
-    .WithManagementPlugin();
-
-var minioS3 = builder
-    .AddMinIO("minio")
-    // hardcoded cause pommalabs package doesn't support aws integration and alvatec package doesn't work properly
-    .WithCredentials("RxPK5N88zPH0R45l9K0O", "Ao5AcPI9xzBu9jUiWevZFcoytDf5DICAw4J0rvJF")
-    .WithDataVolume();
 builder
-    .AddFilesService(filesServiceDb, rabbitMq, minioS3, awsConfig);
+    .AddFilesService(postgres, rabbitMq, minioS3, awsConfig);
 
+var notificationServiceDb = postgres
+    .AddDatabase("notifications-service-db");
+builder
+    .AddProject<Projects.CloudStorage_NotificationService>("notification-service")
+    .WithEnvironment("PersistenceSettings__ConnectionString", notificationServiceDb)
+    .WaitFor(notificationServiceDb)
+    .WithReference(rabbitMq)
+    .WaitFor(rabbitMq);
 builder.Build().Run();

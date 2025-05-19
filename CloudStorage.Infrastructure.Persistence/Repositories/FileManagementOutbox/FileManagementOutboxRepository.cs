@@ -1,8 +1,8 @@
 ﻿using System.Data;
 using System.Text.Json;
-using CloudStorage.Domain.Abstractions;
-using CloudStorage.Domain.FileManagement.Repositories.FileManagementOutboxRepository;
-using CloudStorage.Domain.FileManagement.ValueObjects;
+using CloudStorage.FileService.Domain.Abstractions;
+using CloudStorage.FileService.Domain.FileManagement.Repositories.FileManagementOutboxRepository;
+using CloudStorage.FileService.Domain.FileManagement.ValueObjects;
 using Dapper;
 
 namespace CloudStorage.Infrastructure.Persistence.Repositories.FileManagementOutbox;
@@ -12,7 +12,7 @@ internal sealed class FileManagementOutboxRepository(
     IDbConnection dbConnection,
     IDbTransaction? dbTransaction = null) : IFileManagementOutboxRepository
 {
-    public async Task<FileManagementOutboxId> AddAsync(Domain.FileManagement.Entities.FileManagementOutbox fileManagementOutbox, CancellationToken cancellationToken = default)
+    public async Task<FileManagementOutboxId> AddAsync(FileService.Domain.FileManagement.Entities.FileManagementOutbox fileManagementOutbox, CancellationToken cancellationToken = default)
     {
         const string sqlQuery =
             """
@@ -32,7 +32,7 @@ internal sealed class FileManagementOutboxRepository(
     public Task<FileManagementOutboxId> AddAsync<TMessage>(TMessage message, CancellationToken cancellationToken = default)
     {
         var type = typeof(TMessage).FullName ?? throw new InvalidOperationException($"Generic type of {nameof(message)} is not instantiated.");
-        var outbox = new Domain.FileManagement.Entities.FileManagementOutbox()
+        var outbox = new FileService.Domain.FileManagement.Entities.FileManagementOutbox()
         {
             Id = FileManagementOutboxId.New(),
             Type = type,
@@ -42,7 +42,7 @@ internal sealed class FileManagementOutboxRepository(
         return AddAsync(outbox, cancellationToken);
     }
 
-    public async Task<IReadOnlyList<Domain.FileManagement.Entities.FileManagementOutbox>> GetTopUnprocessedAsync(
+    public async Task<IReadOnlyList<FileService.Domain.FileManagement.Entities.FileManagementOutbox>> GetTopUnprocessedAsync(
         GetTopUnprocessedOutboxesModel model,
         CancellationToken cancellationToken = default)
     {
@@ -59,7 +59,7 @@ internal sealed class FileManagementOutboxRepository(
             model,
             dbTransaction,
             cancellationToken: cancellationToken);
-        var outboxes = await dbConnection.QueryAsync<Domain.FileManagement.Entities.FileManagementOutbox>(commandDefinition);
+        var outboxes = await dbConnection.QueryAsync<FileService.Domain.FileManagement.Entities.FileManagementOutbox>(commandDefinition);
         return outboxes.ToList();
     }
 

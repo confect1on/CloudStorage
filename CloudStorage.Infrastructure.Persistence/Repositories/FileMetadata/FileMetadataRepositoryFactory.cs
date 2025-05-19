@@ -1,6 +1,6 @@
 ﻿using System.Data;
-using CloudStorage.Domain.Abstractions;
-using CloudStorage.Domain.FileManagement;
+using CloudStorage.FileService.Domain.Abstractions;
+using CloudStorage.FileService.Domain.FileManagement;
 using CloudStorage.Infrastructure.Persistence.ConnectionFactory;
 
 namespace CloudStorage.Infrastructure.Persistence.Repositories.FileMetadata;

@@ -1,7 +1,7 @@
 ﻿using Amazon.S3;
 using Amazon.S3.Model;
-using CloudStorage.Domain.FileManagement.Repositories;
-using CloudStorage.Domain.FileManagement.ValueObjects;
+using CloudStorage.FileService.Domain.FileManagement.Repositories;
+using CloudStorage.FileService.Domain.FileManagement.ValueObjects;
 using Microsoft.Extensions.Options;
 
 namespace CloudStorage.Infrastructure.S3Storage;

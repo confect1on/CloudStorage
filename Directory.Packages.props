@@ -4,6 +4,7 @@
     <PackageVersion Include="Aspire.Hosting.AWS" Version="9.2.1" />
     <PackageVersion Include="Aspire.Hosting.PostgreSQL" Version="9.2.1" />
     <PackageVersion Include="Aspire.Hosting.RabbitMQ" Version="9.2.1" />
+    <PackageVersion Include="Aspire.RabbitMQ.Client.v7" Version="9.2.1" />
     <PackageVersion Include="AWSSDK.Extensions.NETCore.Setup" Version="4.0.0" />
     <PackageVersion Include="AWSSDK.S3" Version="4.0.0.3" />
     <PackageVersion Include="Dapper" Version="2.1.66" />

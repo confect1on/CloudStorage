@@ -1,4 +1,4 @@
-﻿using CloudStorage.Domain.Abstractions;
+﻿using CloudStorage.FileService.Domain.Abstractions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 

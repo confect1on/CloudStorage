@@ -1,5 +1,5 @@
 ﻿using Amazon.S3;
-using CloudStorage.Domain.FileManagement.Repositories;
+using CloudStorage.FileService.Domain.FileManagement.Repositories;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 

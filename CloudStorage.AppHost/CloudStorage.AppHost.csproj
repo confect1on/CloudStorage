@@ -19,7 +19,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\CloudStorage.FilesService\CloudStorage.FilesService.csproj" />
+      <ProjectReference Include="..\CloudStorage.FileService\CloudStorage.FileService.csproj" />
+      <ProjectReference Include="..\CloudStorage.NotificationService\CloudStorage.NotificationService.csproj" />
     </ItemGroup>
 
 </Project>

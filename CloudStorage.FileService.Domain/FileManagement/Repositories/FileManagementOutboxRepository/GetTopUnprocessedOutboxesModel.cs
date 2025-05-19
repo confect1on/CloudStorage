@@ -1,0 +1,3 @@
+﻿namespace CloudStorage.FileService.Domain.FileManagement.Repositories.FileManagementOutboxRepository;
+
+public record GetTopUnprocessedOutboxesModel(int MaxUnprocessedOutboxesCount);

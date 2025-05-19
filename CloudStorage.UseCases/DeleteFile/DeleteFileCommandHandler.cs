@@ -1,6 +1,6 @@
-﻿using CloudStorage.Domain;
-using CloudStorage.Domain.Abstractions;
-using CloudStorage.Domain.FileManagement.DomainEvents;
+﻿using CloudStorage.FileService.Domain;
+using CloudStorage.FileService.Domain.Abstractions;
+using CloudStorage.FileService.Domain.FileManagement.DomainEvents;
 using MediatR;
 
 namespace CloudStorage.UseCases.DeleteFile;

@@ -1,8 +1,8 @@
 ﻿using System.Data;
-using CloudStorage.Domain.Abstractions;
-using CloudStorage.Domain.FileManagement;
-using CloudStorage.Domain.FileManagement.Exceptions;
-using CloudStorage.Domain.FileManagement.ValueObjects;
+using CloudStorage.FileService.Domain.Abstractions;
+using CloudStorage.FileService.Domain.FileManagement;
+using CloudStorage.FileService.Domain.FileManagement.Exceptions;
+using CloudStorage.FileService.Domain.FileManagement.ValueObjects;
 using Dapper;
 
 namespace CloudStorage.Infrastructure.Persistence.Repositories.FileMetadata;
@@ -12,7 +12,7 @@ internal sealed class FileMetadataRepository(
     IDbConnection dbConnection,
     IDbTransaction? dbTransaction = null) : IFileMetadataRepository
 {
-    public async Task<FileMetadataId> AddAsync(Domain.FileManagement.Entities.FileMetadata fileMetadata, CancellationToken cancellationToken = default)
+    public async Task<FileMetadataId> AddAsync(FileService.Domain.FileManagement.Entities.FileMetadata fileMetadata, CancellationToken cancellationToken = default)
     {
         const string sqlQuery =
             """
@@ -25,7 +25,7 @@ internal sealed class FileMetadataRepository(
         return fileMetaDataId;
     }
 
-    public async Task<Domain.FileManagement.Entities.FileMetadata> GetByIdAsync(FileMetadataId fileMetadataId, CancellationToken cancellationToken = default)
+    public async Task<FileService.Domain.FileManagement.Entities.FileMetadata> GetByIdAsync(FileMetadataId fileMetadataId, CancellationToken cancellationToken = default)
     {
         const string sqlQuery =
             """
@@ -40,7 +40,7 @@ internal sealed class FileMetadataRepository(
             },
             dbTransaction,
             cancellationToken: cancellationToken);
-        var fileMetadata = await dbConnection.QueryFirstOrDefaultAsync<Domain.FileManagement.Entities.FileMetadata>(commandDefinition);
+        var fileMetadata = await dbConnection.QueryFirstOrDefaultAsync<FileService.Domain.FileManagement.Entities.FileMetadata>(commandDefinition);
         if (fileMetadata is null)
         {
             throw new FileMetadataNotFoundException(fileMetadataId);

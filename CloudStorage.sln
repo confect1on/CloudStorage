@@ -1,8 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudStorage.FilesService", "CloudStorage.FilesService\CloudStorage.FilesService.csproj", "{417A8975-6195-425E-9E0D-4910BC8062DC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudStorage.FileService", "CloudStorage.FileService\CloudStorage.FileService.csproj", "{417A8975-6195-425E-9E0D-4910BC8062DC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudStorage.Domain", "CloudStorage.Domain\CloudStorage.Domain.csproj", "{FD339520-AA9F-451F-9937-959FF5FD30F4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudStorage.FileService.Domain", "CloudStorage.FileService.Domain\CloudStorage.FileService.Domain.csproj", "{FD339520-AA9F-451F-9937-959FF5FD30F4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudStorage.UseCases", "CloudStorage.UseCases\CloudStorage.UseCases.csproj", "{22872A24-8F62-4C7C-9FFE-9913F45909DD}"
 EndProject
@@ -24,7 +24,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudStorage.AppHost", "Clo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudStorage.ServiceDefaults", "CloudStorage.ServiceDefaults\CloudStorage.ServiceDefaults.csproj", "{4288AFD1-ED4C-49DC-9FFE-2370B54424F9}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FilesService", "FilesService", "{7FA1070B-BC38-4F00-A625-C80401F8F7B1}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FileService", "FileService", "{7FA1070B-BC38-4F00-A625-C80401F8F7B1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NotificationService", "NotificationService", "{89F1D1C9-42CC-444D-A43D-80682EBDA581}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudStorage.NotificationService", "CloudStorage.NotificationService\CloudStorage.NotificationService.csproj", "{8F92DA51-14C5-45FD-98CB-0444249176FA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -64,6 +68,10 @@ Global
 		{4288AFD1-ED4C-49DC-9FFE-2370B54424F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4288AFD1-ED4C-49DC-9FFE-2370B54424F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4288AFD1-ED4C-49DC-9FFE-2370B54424F9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F92DA51-14C5-45FD-98CB-0444249176FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F92DA51-14C5-45FD-98CB-0444249176FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F92DA51-14C5-45FD-98CB-0444249176FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F92DA51-14C5-45FD-98CB-0444249176FA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{25787248-F2CE-4428-9BD9-E393044B94DC} = {F4AD4DB9-ED15-4103-AA3A-FF599FEE847B}
@@ -74,5 +82,6 @@ Global
 		{FD339520-AA9F-451F-9937-959FF5FD30F4} = {7FA1070B-BC38-4F00-A625-C80401F8F7B1}
 		{22872A24-8F62-4C7C-9FFE-9913F45909DD} = {7FA1070B-BC38-4F00-A625-C80401F8F7B1}
 		{417A8975-6195-425E-9E0D-4910BC8062DC} = {7FA1070B-BC38-4F00-A625-C80401F8F7B1}
+		{8F92DA51-14C5-45FD-98CB-0444249176FA} = {89F1D1C9-42CC-444D-A43D-80682EBDA581}
 	EndGlobalSection
 EndGlobal

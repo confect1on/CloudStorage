@@ -1,0 +1,5 @@
+﻿using CloudStorage.FileService.Domain.FileManagement.ValueObjects;
+
+namespace CloudStorage.FileService.Domain.FileManagement.Repositories.FileManagementOutboxRepository;
+
+public record MarkProcessedModel(FileManagementOutboxId FileManagementOutboxId);

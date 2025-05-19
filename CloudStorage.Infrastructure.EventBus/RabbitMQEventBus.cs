@@ -1,7 +1,7 @@
 ﻿using System.Text;
 using System.Text.Json;
-using CloudStorage.Domain;
-using CloudStorage.Domain.Abstractions;
+using CloudStorage.FileService.Domain;
+using CloudStorage.FileService.Domain.Abstractions;
 using Microsoft.Extensions.Options;
 using RabbitMQ.Client;
 

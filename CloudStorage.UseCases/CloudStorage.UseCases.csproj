@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <ItemGroup>
-      <ProjectReference Include="..\CloudStorage.Domain\CloudStorage.Domain.csproj" />
+      <ProjectReference Include="..\CloudStorage.FileService.Domain\CloudStorage.FileService.Domain.csproj" />
     </ItemGroup>
     <ItemGroup>
       <PackageReference Include="MediatR" />

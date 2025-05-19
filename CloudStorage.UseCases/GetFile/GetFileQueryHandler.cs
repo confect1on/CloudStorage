@@ -1,5 +1,5 @@
-﻿using CloudStorage.Domain.FileManagement;
-using CloudStorage.Domain.FileManagement.Repositories;
+﻿using CloudStorage.FileService.Domain.FileManagement;
+using CloudStorage.FileService.Domain.FileManagement.Repositories;
 using CloudStorage.UseCases.Mappers;
 using MediatR;
 

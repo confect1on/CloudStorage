@@ -1,4 +1,4 @@
-﻿using CloudStorage.Domain.FileManagement.Entities;
+﻿using CloudStorage.FileService.Domain.FileManagement.Entities;
 
 namespace CloudStorage.UseCases.Mappers;
 

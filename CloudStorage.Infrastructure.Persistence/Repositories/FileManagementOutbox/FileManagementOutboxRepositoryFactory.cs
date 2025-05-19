@@ -1,6 +1,6 @@
 ﻿using System.Data;
-using CloudStorage.Domain.Abstractions;
-using CloudStorage.Domain.FileManagement.Repositories.FileManagementOutboxRepository;
+using CloudStorage.FileService.Domain.Abstractions;
+using CloudStorage.FileService.Domain.FileManagement.Repositories.FileManagementOutboxRepository;
 using CloudStorage.Infrastructure.Persistence.ConnectionFactory;
 
 namespace CloudStorage.Infrastructure.Persistence.Repositories.FileManagementOutbox;

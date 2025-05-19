@@ -1,4 +1,4 @@
-﻿using CloudStorage.Domain.FileManagement.ValueObjects;
+﻿using CloudStorage.FileService.Domain.FileManagement.ValueObjects;
 
 namespace CloudStorage.UseCases.UploadFile;
 

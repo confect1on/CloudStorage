@@ -1,8 +1,8 @@
-﻿using CloudStorage.Domain.Abstractions;
-using CloudStorage.Domain.FileManagement;
-using CloudStorage.Domain.FileManagement.Repositories.FileManagementOutboxRepository;
-using CloudStorage.Domain.FileManagement.ValueObjects;
-using CloudStorage.Domain.UserManagement.ValueObjects;
+﻿using CloudStorage.FileService.Domain.Abstractions;
+using CloudStorage.FileService.Domain.FileManagement;
+using CloudStorage.FileService.Domain.FileManagement.Repositories.FileManagementOutboxRepository;
+using CloudStorage.FileService.Domain.FileManagement.ValueObjects;
+using CloudStorage.FileService.Domain.UserManagement.ValueObjects;
 using CloudStorage.Infrastructure.Persistence.ConnectionFactory;
 using CloudStorage.Infrastructure.Persistence.Persistence.Migrations;
 using CloudStorage.Infrastructure.Persistence.Repositories.FileManagementOutbox;
@@ -49,7 +49,8 @@ public static class PersistenceServiceCollectionExtensions
         .AddSingleton<IUnitOfWorkFactory, DapperUnitOfWorkFactory>()
         .AddScoped<IUnitOfWork, DapperUnitOfWork>();
     
-    internal static IServiceCollection AddMigrations(this IServiceCollection services) => services.AddFluentMigratorCore()
+    internal static IServiceCollection AddMigrations(this IServiceCollection services) => services
+        .AddFluentMigratorCore()
         .ConfigureRunner(
             builder => builder
                 .AddPostgres()

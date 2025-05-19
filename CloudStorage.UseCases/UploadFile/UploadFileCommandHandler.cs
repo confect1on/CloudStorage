@@ -1,12 +1,12 @@
 ﻿using System.Data;
-using CloudStorage.Domain;
-using CloudStorage.Domain.Abstractions;
-using CloudStorage.Domain.FileManagement;
-using CloudStorage.Domain.FileManagement.DomainEvents;
-using CloudStorage.Domain.FileManagement.Entities;
-using CloudStorage.Domain.FileManagement.Repositories;
-using CloudStorage.Domain.FileManagement.Repositories.FileManagementOutboxRepository;
-using CloudStorage.Domain.FileManagement.ValueObjects;
+using CloudStorage.FileService.Domain;
+using CloudStorage.FileService.Domain.Abstractions;
+using CloudStorage.FileService.Domain.FileManagement;
+using CloudStorage.FileService.Domain.FileManagement.DomainEvents;
+using CloudStorage.FileService.Domain.FileManagement.Entities;
+using CloudStorage.FileService.Domain.FileManagement.Repositories;
+using CloudStorage.FileService.Domain.FileManagement.Repositories.FileManagementOutboxRepository;
+using CloudStorage.FileService.Domain.FileManagement.ValueObjects;
 using MediatR;
 
 namespace CloudStorage.UseCases.UploadFile;
@@ -15,7 +15,6 @@ internal sealed class UploadFileCommandHandler(
     IUnitOfWork uow,
     IDateTimeOffsetProvider dateTimeOffsetProvider,
     IUserAccessor userAccessor,
-    IFileStorage fileStorage,
     ITemporaryFileStorage temporaryFileStorage) : IRequestHandler<UploadFileCommand, UploadFileCommandResult>
 {
     public async Task<UploadFileCommandResult> Handle(UploadFileCommand request, CancellationToken cancellationToken)
