@@ -1,5 +1,9 @@
 <Project>
   <ItemGroup>
+    <PackageVersion Include="Altavec.Aspire.Hosting.MinIO" Version="9.2.1" />
+    <PackageVersion Include="Aspire.Hosting.AWS" Version="9.2.1" />
+    <PackageVersion Include="Aspire.Hosting.PostgreSQL" Version="9.2.1" />
+    <PackageVersion Include="Aspire.Hosting.RabbitMQ" Version="9.2.1" />
     <PackageVersion Include="AWSSDK.Extensions.NETCore.Setup" Version="4.0.0" />
     <PackageVersion Include="AWSSDK.S3" Version="4.0.0.3" />
     <PackageVersion Include="Dapper" Version="2.1.66" />
@@ -13,6 +17,7 @@
     <PackageVersion Include="Microsoft.Extensions.Options" Version="9.0.4" />
     <PackageVersion Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="9.0.4" />
     <PackageVersion Include="Npgsql" Version="9.0.3" />
+    <PackageVersion Include="PommaLabs.Aspire.Hosting.MinIO" Version="9.2.1" />
     <PackageVersion Include="RabbitMQ.Client" Version="7.1.2" />
     <PackageVersion Include="StronglyTypedId" Version="1.0.0-beta08" />
     <PackageVersion Include="StronglyTypedId.Templates" Version="1.0.0-beta08" />

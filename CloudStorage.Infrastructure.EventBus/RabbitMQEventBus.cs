@@ -16,10 +16,7 @@ internal sealed class RabbitMqEventBus(IOptions<EventBusSettings> options) : IEv
             publisherConfirmationTrackingEnabled: false);
         var connectionFactory = new ConnectionFactory
         {
-            HostName = options.Value.HostName,
-            Port = options.Value.Port,
-            UserName = options.Value.UserName,
-            Password = options.Value.Password,
+            Uri = new Uri(options.Value.ConnectionString),
         };
         await using var connection = await connectionFactory.CreateConnectionAsync(cancellationToken); 
         await using var channel = await connection.CreateChannelAsync(createChannelOptions, cancellationToken);
