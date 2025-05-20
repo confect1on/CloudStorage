@@ -1,8 +1,10 @@
-﻿using CloudStorage.NotificationService.Domain.NotificationManagement.ValueObjects;
+﻿using CloudStorage.NotificationService.Domain.NotificationManagement;
+using CloudStorage.NotificationService.Domain.NotificationManagement.ValueObjects;
+using MimeKit;
 
 namespace CloudStorage.NotificationService.Notifications;
 
 public interface IEmailBodyFactory
 {
-    string CreateBodyByEventTime(EventType eventType);
+    MimeEntity CreateBodyByEventTime(UserDto userDto, EventType eventType);
 }

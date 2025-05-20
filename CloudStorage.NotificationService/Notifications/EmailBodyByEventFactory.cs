@@ -1,6 +1,13 @@
-﻿namespace CloudStorage.NotificationService.Notifications;
+﻿using CloudStorage.NotificationService.Domain.NotificationManagement;
+using CloudStorage.NotificationService.Domain.NotificationManagement.ValueObjects;
+using MimeKit;
 
-internal sealed class EmailBodyByEventFactory
+namespace CloudStorage.NotificationService.Notifications;
+
+internal sealed class EmailBodyByEventFactory : IEmailBodyFactory
 {
-    
+    public MimeEntity CreateBodyByEventTime(UserDto userDto, EventType eventType)
+    {
+        throw new NotImplementedException();
+    }
 }
