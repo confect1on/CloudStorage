@@ -1,6 +1,6 @@
-﻿namespace CloudStorage.NotificationService.Persistence.Repositories;
+﻿namespace CloudStorage.NotificationService;
 
-internal sealed class FilePublishedInboxDto
+public sealed class FilePublishedInboxDto
 {
     public Guid Id { get; set; }
     

@@ -10,11 +10,10 @@ public class AddFilePublishedEventInboxTable : Migration
         Create.Table("file_published_event_inbox")
             .WithColumn("id").AsGuid().NotNullable().PrimaryKey()
             .WithColumn("created_at").AsDateTimeOffset().NotNullable()
-            .WithColumn("file_metadata_id").AsDateTimeOffset().NotNullable()
+            .WithColumn("file_metadata_id").AsGuid().NotNullable()
             .WithColumn("received_at").AsDateTimeOffset().NotNullable()
             .WithColumn("processing_at").AsDateTimeOffset().Nullable()
-            .WithColumn("processed_at").AsDateTimeOffset().Nullable()
-            .WithColumn("version").AsInt64().NotNullable();
+            .WithColumn("processed_at").AsDateTimeOffset().Nullable();
     }
 
     public override void Down()

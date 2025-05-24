@@ -1,4 +1,5 @@
-﻿using CloudStorage.NotificationService.Persistence.Migrations;
+﻿using CloudStorage.NotificationService.Infrastructure.Persistence.Repositories;
+using CloudStorage.NotificationService.Persistence.Migrations;
 using FluentMigrator.Runner;
 using Microsoft.Extensions.Options;
 
@@ -24,4 +25,7 @@ public static class PersistenceServiceCollectionExtensions
                         return persistenceOptions.Value.ConnectionString;
                     })
                 .ScanIn(typeof(AddFilePublishedEventInboxTable).Assembly).For.Migrations());
+
+    private static IServiceCollection AddRepositories(this IServiceCollection services) => services
+        .AddSingleton<IFilePublishedInboxRepositoryFactory, FilePublishedInboxRepositoryFactory>();
 }

@@ -1,4 +1,4 @@
-﻿namespace CloudStorage.NotificationService.Domain.NotificationManagement;
+﻿namespace CloudStorage.NotificationService.Domain.NotificationManagement.UserApiClient;
 
 public interface IUserApiClient
 {

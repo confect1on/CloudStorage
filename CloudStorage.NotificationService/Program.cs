@@ -1,13 +1,23 @@
 using CloudStorage.NotificationService;
+using CloudStorage.NotificationService.BLL.Notifications;
+using CloudStorage.NotificationService.Infrastructure;
+using CloudStorage.NotificationService.Infrastructure.EventBus;
 using CloudStorage.NotificationService.Persistence;
 using CloudStorage.NotificationService.Persistence.Extensions;
 using CloudStorage.ServiceDefaults;
 
 var builder = Host.CreateApplicationBuilder(args);
 builder.AddServiceDefaults();
-// builder.AddRabbitMQClient();
-// builder.Services.AddHostedService<Worker>();
-builder.Services.AddPersistenceServices(builder.Configuration);
+builder.AddEventBus();
+builder.Services
+    .AddHostedService<RabbitMQConsumer>()
+    .AddHostedService<InboxMessageProcessor>();
+builder.Services
+    .AddPersistenceServices(builder.Configuration)
+    .AddApiClients();
+
+builder.Services
+    .AddNotificationServices(builder.Configuration);
 var host = builder.Build();
 host.MigrateUp();
 host.Run();

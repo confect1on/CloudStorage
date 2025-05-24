@@ -1,4 +1,4 @@
-﻿namespace CloudStorage.NotificationService.Notifications;
+﻿namespace CloudStorage.NotificationService.BLL.Notifications.EmailNotificationService;
 
 public record EmailNotificationSettings
 {

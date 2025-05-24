@@ -22,6 +22,6 @@ builder
     .AddProject<Projects.CloudStorage_NotificationService>("notification-service")
     .WithEnvironment("PersistenceSettings__ConnectionString", notificationServiceDb)
     .WaitFor(notificationServiceDb)
-    .WithReference(rabbitMq)
+    .WithEnvironment("RabbitMQSettings__ConnectionString", rabbitMq)
     .WaitFor(rabbitMq);
 builder.Build().Run();

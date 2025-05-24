@@ -1,8 +1,7 @@
 using System.Text;
 using System.Text.Json;
-using CloudStorage.NotificationService.EventBus;
+using CloudStorage.NotificationService.Infrastructure.EventBus;
 using CloudStorage.NotificationService.Persistence;
-using CloudStorage.NotificationService.Persistence.Repositories;
 using Dapper;
 using Microsoft.Extensions.Options;
 using Npgsql;
