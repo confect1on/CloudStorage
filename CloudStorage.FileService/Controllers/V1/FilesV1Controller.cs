@@ -4,6 +4,7 @@ using CloudStorage.UseCases.DeleteFile;
 using CloudStorage.UseCases.GetFile;
 using CloudStorage.UseCases.UploadFile;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CloudStorage.FilesService.Controllers.V1;
@@ -14,17 +15,18 @@ namespace CloudStorage.FilesService.Controllers.V1;
 public class FilesV1Controller(IMediator mediator) : ControllerBase
 {
     [HttpGet("{id:guid}")]
+    [AllowAnonymous]
     public async Task<IActionResult> GetFile(Guid id, CancellationToken cancellationToken)
     {
         var command = new GetFileQuery(new FileMetadataId(id));
         var result = await mediator.Send(command, cancellationToken);
         return File(result.FileStream, result.FileMetadataDto.MimeType, result.FileMetadataDto.FileName);
-        throw new NotImplementedException();
     }
 
     [HttpPost]
     [RequestSizeLimit(100_000_000)]
     [ProducesResponseType<UploadFileCommandResult>(StatusCodes.Status202Accepted)]
+    [Authorize]
     public async Task<IResult> UploadFile(IFormFile file)
     {
         await using var memoryStream = new MemoryStream((int)file.Length);
@@ -36,6 +38,7 @@ public class FilesV1Controller(IMediator mediator) : ControllerBase
     }
 
     [HttpDelete("{id:guid}")]
+    [Authorize]
     public async Task DeleteFile(Guid id)
     {
         var command = new DeleteFileCommand(new FileMetadataId(id));

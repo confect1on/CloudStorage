@@ -2,7 +2,7 @@
 
 namespace CloudStorage.FileService.Domain.Abstractions;
 
-public interface IUserAccessor
+public interface ICurrentUserAccessor
 {
     UserId GetCurrentUserId();
 }

@@ -1,5 +1,7 @@
 using CloudStorage.FileService.Domain;
+using CloudStorage.FileService.Domain.Abstractions;
 using CloudStorage.FilesService.BackgroundServices.OutboxPublisher;
+using CloudStorage.FilesService.Infrastructure.CurrentUserAccessor;
 using CloudStorage.FilesService.Infrastructure.OpenAPI;
 using CloudStorage.Infrastructure.EventBus;
 using CloudStorage.Infrastructure.Persistence.Extensions;
@@ -14,6 +16,7 @@ builder.AddServiceDefaults();
 // Add services to the container.
 
 builder.Services
+    .AddScoped<ICurrentUserAccessor, CurrentUserAccessor>()
     .AddAsyncInitialization()
     .AddDomainServices()
     .AddPersistence(builder.Configuration)
@@ -33,13 +36,16 @@ builder.Services
         opt.AddOperationTransformer<AuthorizeOperationTransformer>();
     });
 builder.Services
-    .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(
-        jwtOptions =>
+    .AddAuthentication()
+    .AddKeycloakJwtBearer(
+        "keycloak",
+        "CloudStorage",
+        options =>
         {
-            jwtOptions.Audience = builder.Configuration["Jwt:Audience"];
-            jwtOptions.Authority = builder.Configuration["Jwt:Authority"];
+            options.Audience = "cloudstorage.api";
+            options.RequireHttpsMetadata = false;
         });
+builder.Services.AddAuthorizationBuilder();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

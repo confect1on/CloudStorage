@@ -12,6 +12,7 @@ var awsConfig = builder
 var postgres = builder.AddPostgres();
 var rabbitMq = builder.AddRabbitMQ();
 var minioS3 = builder.AddMinioS3();
+var keycloak = builder.AddKeycloak();
 
 builder
     .AddFilesService(postgres, rabbitMq, minioS3, awsConfig);
@@ -24,4 +25,9 @@ builder
     .WaitFor(notificationServiceDb)
     .WithEnvironment("RabbitMQSettings__ConnectionString", rabbitMq)
     .WaitFor(rabbitMq);
+
+builder
+    .AddProject<Projects.AuthService>("auth-service")
+    .WithReference(keycloak)
+    .WaitFor(keycloak);
 builder.Build().Run();

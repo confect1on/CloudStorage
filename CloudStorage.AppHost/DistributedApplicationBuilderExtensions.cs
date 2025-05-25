@@ -33,7 +33,7 @@ internal static class DistributedApplicationBuilderExtensions
     }
     
     public static IResourceBuilder<MinIOResource> AddMinioS3(this IDistributedApplicationBuilder builder) => builder
-        .AddMinIO("minio")
+        .AddMinIO("minio", apiPort: 9000)
         // hardcoded cause pommalabs package doesn't support aws integration and alvatec package doesn't work properly
         .WithCredentials("RxPK5N88zPH0R45l9K0O", "Ao5AcPI9xzBu9jUiWevZFcoytDf5DICAw4J0rvJF")
         .WithDataVolume();
@@ -47,6 +47,9 @@ internal static class DistributedApplicationBuilderExtensions
         .AddPostgres("postgres")
         .WithPgAdmin()
         .WithDataVolume();
-    
+
+    public static IResourceBuilder<KeycloakResource> AddKeycloak(this IDistributedApplicationBuilder builder) => builder
+        .AddKeycloak("keycloak", 8080)
+        .WithDataVolume();
 }
 

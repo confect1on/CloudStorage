@@ -14,7 +14,7 @@ namespace CloudStorage.UseCases.UploadFile;
 internal sealed class UploadFileCommandHandler(
     IUnitOfWork uow,
     IDateTimeOffsetProvider dateTimeOffsetProvider,
-    IUserAccessor userAccessor,
+    ICurrentUserAccessor currentUserAccessor,
     ITemporaryFileStorage temporaryFileStorage) : IRequestHandler<UploadFileCommand, UploadFileCommandResult>
 {
     public async Task<UploadFileCommandResult> Handle(UploadFileCommand request, CancellationToken cancellationToken)
@@ -26,7 +26,7 @@ internal sealed class UploadFileCommandHandler(
             MimeType = request.FileMetadataDto.MimeType,
             FileSizeInBytes = request.FileMetadataDto.FileSizeInBytes,
             CreatedAt = dateTimeOffsetProvider.GetUtcNow(),
-            UserId = userAccessor.GetCurrentUserId(),
+            UserId = currentUserAccessor.GetCurrentUserId(),
         };
         await uow.BeginTransactionAsync(IsolationLevel.ReadCommitted, cancellationToken);
         try

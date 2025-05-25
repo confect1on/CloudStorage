@@ -7,6 +7,5 @@ namespace CloudStorage.FileService.Domain;
 public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddDomainServices(this IServiceCollection services) => services
-        .AddSingleton<IDateTimeOffsetProvider, DateTimeOffsetProvider>()
-        .AddSingleton<IUserAccessor, UserAccessor>();
+        .AddSingleton<IDateTimeOffsetProvider, DateTimeOffsetProvider>();
 }
