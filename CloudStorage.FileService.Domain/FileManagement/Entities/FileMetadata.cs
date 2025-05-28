@@ -7,7 +7,7 @@ public class FileMetadata
 {
     public FileMetadataId Id { get; set; }
     
-    public required UserId UserId { get; set; }
+    public required UserId OwnerUserId { get; set; }
     
     public StorageId? StorageId { get; set; }
     

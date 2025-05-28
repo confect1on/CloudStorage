@@ -1,4 +1,5 @@
-﻿using CloudStorage.FileService.Domain.Abstractions;
+﻿using System.Security.Claims;
+using CloudStorage.FileService.Domain.Abstractions;
 using CloudStorage.FileService.Domain.UserManagement.ValueObjects;
 
 namespace CloudStorage.FilesService.Infrastructure.CurrentUserAccessor;
@@ -7,7 +8,7 @@ internal sealed class CurrentUserAccessor(IHttpContextAccessor httpContextAccess
 {
     public UserId GetCurrentUserId()
     {
-        var subClaimValue = httpContextAccessor.HttpContext?.User.FindFirst("sub")?.Value;
+        var subClaimValue = httpContextAccessor.HttpContext?.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
         if (subClaimValue is null)
         {
             throw new InvalidOperationException("Cannot access 'sub' claim for current user.");

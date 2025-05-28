@@ -9,9 +9,9 @@ using CloudStorage.ServiceDefaults;
 var builder = Host.CreateApplicationBuilder(args);
 builder.AddServiceDefaults();
 builder.AddEventBus();
-builder.Services
-    .AddHostedService<RabbitMQConsumer>()
-    .AddHostedService<InboxMessageProcessor>();
+// builder.Services
+//     .AddHostedService<RabbitMQConsumer>()
+//     .AddHostedService<InboxMessageProcessor>();
 builder.Services
     .AddPersistenceServices(builder.Configuration)
     .AddApiClients();

@@ -2,5 +2,5 @@
 
 namespace CloudStorage.FileService.Domain.UserManagement.ValueObjects;
 
-[StronglyTypedId(Template.Long, "long-dapper")]
+[StronglyTypedId(Template.Guid, "guid-dapper")]
 public readonly partial struct UserId;

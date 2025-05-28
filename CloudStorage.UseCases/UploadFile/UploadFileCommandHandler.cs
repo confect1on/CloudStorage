@@ -26,7 +26,7 @@ internal sealed class UploadFileCommandHandler(
             MimeType = request.FileMetadataDto.MimeType,
             FileSizeInBytes = request.FileMetadataDto.FileSizeInBytes,
             CreatedAt = dateTimeOffsetProvider.GetUtcNow(),
-            UserId = currentUserAccessor.GetCurrentUserId(),
+            OwnerUserId = currentUserAccessor.GetCurrentUserId(),
         };
         await uow.BeginTransactionAsync(IsolationLevel.ReadCommitted, cancellationToken);
         try

@@ -9,6 +9,7 @@ internal static class DistributedApplicationBuilderExtensions
         IResourceBuilder<PostgresServerResource> postgres,
         IResourceBuilder<RabbitMQServerResource> rabbitMq,
         IResourceBuilder<MinIOResource> minioS3,
+        IResourceBuilder<KeycloakResource> keycloak,
         IAWSSDKConfig awsConfig)
     {
         var filesServiceDb = postgres
@@ -28,7 +29,9 @@ internal static class DistributedApplicationBuilderExtensions
             .WithEnvironment("S3FileStorageSettings__S3Bucket", "dev-files-bucket")
             .WithEnvironment("S3FileStorageSettings__TemporaryS3Bucket", "temporary-bucket")
             .WaitFor(minioS3)
-            .WithReference(awsConfig);
+            .WithReference(awsConfig)
+            .WithReference(keycloak)
+            .WaitFor(keycloak);
         return builder;
     }
     
@@ -44,7 +47,7 @@ internal static class DistributedApplicationBuilderExtensions
         .WithDataVolume();
     
     public static IResourceBuilder<PostgresServerResource> AddPostgres(this IDistributedApplicationBuilder builder) => builder
-        .AddPostgres("postgres")
+        .AddPostgres("postgres", port: 15432)
         .WithPgAdmin()
         .WithDataVolume();
 

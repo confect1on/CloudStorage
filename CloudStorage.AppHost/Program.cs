@@ -15,7 +15,7 @@ var minioS3 = builder.AddMinioS3();
 var keycloak = builder.AddKeycloak();
 
 builder
-    .AddFilesService(postgres, rabbitMq, minioS3, awsConfig);
+    .AddFilesService(postgres, rabbitMq, minioS3, keycloak, awsConfig);
 
 var notificationServiceDb = postgres
     .AddDatabase("notifications-service-db");

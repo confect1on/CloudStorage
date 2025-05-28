@@ -16,8 +16,8 @@ internal sealed class FileMetadataRepository(
     {
         const string sqlQuery =
             """
-            insert into file_metadata (id, user_id, storage_id, file_name, file_size_in_bytes, mime_type, created_at)
-            values (@Id, @UserId, @StorageId, @FileName, @FileSizeInBytes, @MimeType, @CreatedAt)
+            insert into file_metadata (id, owner_user_id, storage_id, file_name, file_size_in_bytes, mime_type, created_at)
+            values (@Id, @OwnerUserId, @StorageId, @FileName, @FileSizeInBytes, @MimeType, @CreatedAt)
             returning id;
             """;
         var commandDefinition = new CommandDefinition(sqlQuery, fileMetadata, dbTransaction, cancellationToken: cancellationToken);
@@ -29,14 +29,14 @@ internal sealed class FileMetadataRepository(
     {
         const string sqlQuery =
             """
-            select id, user_id, storage_id, file_name, file_size_in_bytes, mime_type, created_at
+            select id, owner_user_id, storage_id, file_name, file_size_in_bytes, mime_type, created_at
             from file_metadata
             where id = @Id;
             """;
         var commandDefinition = new CommandDefinition(
             sqlQuery, new
             {
-                Id = fileMetadataId
+                Id = fileMetadataId,
             },
             dbTransaction,
             cancellationToken: cancellationToken);
@@ -85,7 +85,7 @@ internal sealed class FileMetadataRepository(
             new
             {
                 DeletedAt = dateTimeOffsetProvider.GetUtcNow(),
-                Id = fileMetadataId
+                Id = fileMetadataId,
             },
             cancellationToken: cancellationToken);
         var rows = await dbConnection.ExecuteAsync(command);

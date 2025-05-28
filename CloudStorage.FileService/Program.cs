@@ -16,7 +16,8 @@ builder.AddServiceDefaults();
 // Add services to the container.
 
 builder.Services
-    .AddScoped<ICurrentUserAccessor, CurrentUserAccessor>()
+    .AddHttpContextAccessor()
+    .AddSingleton<ICurrentUserAccessor, CurrentUserAccessor>()
     .AddAsyncInitialization()
     .AddDomainServices()
     .AddPersistence(builder.Configuration)
@@ -42,8 +43,8 @@ builder.Services
         "CloudStorage",
         options =>
         {
-            options.Audience = "cloudstorage.api";
             options.RequireHttpsMetadata = false;
+            options.Audience = "account";
         });
 builder.Services.AddAuthorizationBuilder();
 var app = builder.Build();
