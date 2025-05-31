@@ -32,7 +32,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudStorage.NotificationSe
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AuthService", "AuthService", "{91AF7FBF-6BDD-4B57-BB0A-89CFE0BD9346}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthService", "AuthService\AuthService.csproj", "{5A787344-214C-4EDB-97BD-65D5F25C8F30}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudStorage.UserService", "CloudStorage.UserService\CloudStorage.UserService.csproj", "{5A787344-214C-4EDB-97BD-65D5F25C8F30}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

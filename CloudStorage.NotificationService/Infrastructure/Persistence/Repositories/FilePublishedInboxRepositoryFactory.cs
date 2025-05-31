@@ -1,4 +1,4 @@
-﻿using CloudStorage.NotificationService.Persistence.Repositories;
+﻿using CloudStorage.NotificationService.Infrastructure.Abstractions.Repositories;
 
 namespace CloudStorage.NotificationService.Infrastructure.Persistence.Repositories;
 

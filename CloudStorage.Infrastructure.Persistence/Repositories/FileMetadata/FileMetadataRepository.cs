@@ -2,6 +2,7 @@
 using CloudStorage.FileService.Domain.Abstractions;
 using CloudStorage.FileService.Domain.FileManagement;
 using CloudStorage.FileService.Domain.FileManagement.Exceptions;
+using CloudStorage.FileService.Domain.FileManagement.Repositories;
 using CloudStorage.FileService.Domain.FileManagement.ValueObjects;
 using Dapper;
 

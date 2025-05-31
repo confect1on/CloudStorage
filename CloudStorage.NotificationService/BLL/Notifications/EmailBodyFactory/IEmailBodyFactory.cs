@@ -1,9 +1,8 @@
-﻿using CloudStorage.NotificationService.Domain.NotificationManagement;
+﻿using CloudStorage.NotificationService.BLL.Notifications.EmailNotificationService.Dtos;
 using CloudStorage.NotificationService.Domain.NotificationManagement.UserApiClient;
-using CloudStorage.NotificationService.Notifications.EmailNotificationService.Dtos;
 using MimeKit;
 
-namespace CloudStorage.NotificationService.Notifications.EmailBodyFactory;
+namespace CloudStorage.NotificationService.BLL.Notifications.EmailBodyFactory;
 
 public interface IEmailBodyFactory
 {

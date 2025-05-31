@@ -1,6 +1,6 @@
 ﻿using CloudStorage.NotificationService.Domain.NotificationManagement.UserApiClient;
 
-namespace CloudStorage.NotificationService.UserApiClient;
+namespace CloudStorage.NotificationService.Infrastructure.UserApiClient;
 
 internal sealed class MockUserApiClient : IUserApiClient
 {

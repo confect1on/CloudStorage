@@ -1,7 +1,7 @@
-﻿using AuthService.Services;
-using RestSharp;
+﻿using RestSharp;
+using UserService.Services;
 
-namespace AuthService.KeycloakApiClient;
+namespace UserService.KeycloakApiClient;
 
 internal sealed class KeycloakApiClient(RestClient restClient) : IKeycloakApiClient
 {

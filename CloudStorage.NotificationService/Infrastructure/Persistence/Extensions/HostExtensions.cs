@@ -1,6 +1,6 @@
 ﻿using FluentMigrator.Runner;
 
-namespace CloudStorage.NotificationService.Persistence.Extensions;
+namespace CloudStorage.NotificationService.Infrastructure.Persistence.Extensions;
 
 public static class HostExtensions
 {

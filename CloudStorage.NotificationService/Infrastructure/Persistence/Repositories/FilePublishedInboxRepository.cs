@@ -1,5 +1,5 @@
-﻿using CloudStorage.NotificationService.Persistence;
-using CloudStorage.NotificationService.Persistence.Repositories;
+﻿using CloudStorage.NotificationService.Infrastructure.Abstractions.Repositories;
+using CloudStorage.NotificationService.Persistence;
 using Dapper;
 using Microsoft.Extensions.Options;
 using Npgsql;

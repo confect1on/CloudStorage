@@ -1,7 +1,7 @@
 ﻿using CloudStorage.NotificationService.Domain.NotificationManagement.FileMetadataApiClient;
 using CloudStorage.NotificationService.Domain.NotificationManagement.UserApiClient;
-using CloudStorage.NotificationService.FileMetadataApiClient;
-using CloudStorage.NotificationService.UserApiClient;
+using CloudStorage.NotificationService.Infrastructure.FileMetadataApiClient;
+using CloudStorage.NotificationService.Infrastructure.UserApiClient;
 
 namespace CloudStorage.NotificationService.Infrastructure;
 

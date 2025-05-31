@@ -1,8 +1,8 @@
-﻿using CloudStorage.NotificationService.Domain.NotificationManagement;
+﻿using CloudStorage.NotificationService.BLL.Notifications.EmailNotificationService.Dtos;
+using CloudStorage.NotificationService.Domain.NotificationManagement;
 using CloudStorage.NotificationService.Domain.NotificationManagement.ValueObjects;
+using CloudStorage.NotificationService.Infrastructure.Abstractions.Repositories;
 using CloudStorage.NotificationService.Infrastructure.Persistence.Repositories;
-using CloudStorage.NotificationService.Notifications.EmailNotificationService.Dtos;
-using CloudStorage.NotificationService.Persistence.Repositories;
 
 namespace CloudStorage.NotificationService;
 

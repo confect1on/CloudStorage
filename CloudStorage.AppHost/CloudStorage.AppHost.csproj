@@ -20,7 +20,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\AuthService\AuthService.csproj" />
+      <ProjectReference Include="..\CloudStorage.UserService\CloudStorage.UserService.csproj" />
       <ProjectReference Include="..\CloudStorage.FileService\CloudStorage.FileService.csproj" />
       <ProjectReference Include="..\CloudStorage.NotificationService\CloudStorage.NotificationService.csproj" />
     </ItemGroup>

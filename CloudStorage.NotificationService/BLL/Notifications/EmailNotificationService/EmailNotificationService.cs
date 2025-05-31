@@ -1,9 +1,8 @@
-﻿using CloudStorage.NotificationService.Domain.NotificationManagement;
+﻿using CloudStorage.NotificationService.BLL.Notifications.EmailBodyFactory;
+using CloudStorage.NotificationService.BLL.Notifications.EmailNotificationService.Dtos;
+using CloudStorage.NotificationService.Domain.NotificationManagement;
 using CloudStorage.NotificationService.Domain.NotificationManagement.FileMetadataApiClient;
 using CloudStorage.NotificationService.Domain.NotificationManagement.UserApiClient;
-using CloudStorage.NotificationService.Notifications.EmailBodyFactory;
-using CloudStorage.NotificationService.Notifications.EmailNotificationService;
-using CloudStorage.NotificationService.Notifications.EmailNotificationService.Dtos;
 using MailKit.Net.Smtp;
 using Microsoft.Extensions.Options;
 using MimeKit;

@@ -1,11 +1,10 @@
-﻿using CloudStorage.NotificationService.Domain.NotificationManagement;
+﻿using CloudStorage.NotificationService.BLL.Notifications.EmailNotificationService.Dtos;
+using CloudStorage.NotificationService.BLL.Notifications.FileUriBuilder;
 using CloudStorage.NotificationService.Domain.NotificationManagement.UserApiClient;
 using CloudStorage.NotificationService.Domain.NotificationManagement.ValueObjects;
-using CloudStorage.NotificationService.Notifications.EmailNotificationService.Dtos;
-using CloudStorage.NotificationService.Notifications.FileUriBuilder;
 using MimeKit;
 
-namespace CloudStorage.NotificationService.Notifications.EmailBodyFactory;
+namespace CloudStorage.NotificationService.BLL.Notifications.EmailBodyFactory;
 
 internal sealed class EmailBodyByEventFactory(IFileUriBuilder fileUriBuilder) : IEmailBodyFactory
 {

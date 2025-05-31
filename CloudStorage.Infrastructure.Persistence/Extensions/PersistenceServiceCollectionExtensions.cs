@@ -1,5 +1,6 @@
 ﻿using CloudStorage.FileService.Domain.Abstractions;
 using CloudStorage.FileService.Domain.FileManagement;
+using CloudStorage.FileService.Domain.FileManagement.Repositories;
 using CloudStorage.FileService.Domain.FileManagement.Repositories.FileManagementOutboxRepository;
 using CloudStorage.FileService.Domain.FileManagement.ValueObjects;
 using CloudStorage.FileService.Domain.UserManagement.ValueObjects;

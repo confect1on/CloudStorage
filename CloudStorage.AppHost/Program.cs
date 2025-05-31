@@ -27,7 +27,7 @@ builder
     .WaitFor(rabbitMq);
 
 builder
-    .AddProject<Projects.AuthService>("auth-service")
+    .AddProject<Projects.CloudStorage_UserService>("user-service")
     .WithReference(keycloak)
     .WaitFor(keycloak);
 builder.Build().Run();

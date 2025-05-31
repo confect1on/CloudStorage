@@ -2,8 +2,9 @@ using CloudStorage.NotificationService;
 using CloudStorage.NotificationService.BLL.Notifications;
 using CloudStorage.NotificationService.Infrastructure;
 using CloudStorage.NotificationService.Infrastructure.EventBus;
+using CloudStorage.NotificationService.Infrastructure.Persistence;
+using CloudStorage.NotificationService.Infrastructure.Persistence.Extensions;
 using CloudStorage.NotificationService.Persistence;
-using CloudStorage.NotificationService.Persistence.Extensions;
 using CloudStorage.ServiceDefaults;
 
 var builder = Host.CreateApplicationBuilder(args);

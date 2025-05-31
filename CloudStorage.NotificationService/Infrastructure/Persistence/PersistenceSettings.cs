@@ -1,4 +1,4 @@
-﻿namespace CloudStorage.NotificationService.Persistence;
+﻿namespace CloudStorage.NotificationService.Infrastructure.Persistence;
 
 public class PersistenceSettings
 {

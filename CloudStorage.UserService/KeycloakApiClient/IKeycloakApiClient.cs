@@ -1,6 +1,6 @@
-﻿using AuthService.Services;
+﻿using UserService.Services;
 
-namespace AuthService.KeycloakApiClient;
+namespace UserService.KeycloakApiClient;
 
 public interface IKeycloakApiClient
 {

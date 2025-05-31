@@ -1,4 +1,4 @@
-﻿namespace AuthService.Services;
+﻿namespace UserService.Services;
 
 public interface IUserService
 {

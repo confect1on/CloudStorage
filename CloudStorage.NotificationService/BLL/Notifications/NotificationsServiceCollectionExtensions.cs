@@ -1,8 +1,7 @@
-﻿using CloudStorage.NotificationService.BLL.Notifications.EmailNotificationService;
+﻿using CloudStorage.NotificationService.BLL.Notifications.EmailBodyFactory;
+using CloudStorage.NotificationService.BLL.Notifications.EmailNotificationService;
+using CloudStorage.NotificationService.BLL.Notifications.FileUriBuilder;
 using CloudStorage.NotificationService.Domain.NotificationManagement;
-using CloudStorage.NotificationService.Notifications.EmailBodyFactory;
-using CloudStorage.NotificationService.Notifications.EmailNotificationService;
-using CloudStorage.NotificationService.Notifications.FileUriBuilder;
 using MailKit.Net.Smtp;
 
 namespace CloudStorage.NotificationService.BLL.Notifications;

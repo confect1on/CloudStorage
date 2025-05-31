@@ -1,6 +1,6 @@
 ﻿using CloudStorage.NotificationService.Domain.NotificationManagement.FileMetadataApiClient;
 
-namespace CloudStorage.NotificationService.FileMetadataApiClient;
+namespace CloudStorage.NotificationService.Infrastructure.FileMetadataApiClient;
 
 internal sealed class MockFileMetadataApiClient : IFileMetadataApiClient
 {

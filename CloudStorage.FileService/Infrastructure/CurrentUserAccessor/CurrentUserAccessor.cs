@@ -11,7 +11,7 @@ internal sealed class CurrentUserAccessor(IHttpContextAccessor httpContextAccess
         var subClaimValue = httpContextAccessor.HttpContext?.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
         if (subClaimValue is null)
         {
-            throw new InvalidOperationException("Cannot access 'sub' claim for current user.");
+            throw new InvalidOperationException("Cannot access 'sub' claim for the current token.");
         }
         return UserId.Parse(subClaimValue);
     }

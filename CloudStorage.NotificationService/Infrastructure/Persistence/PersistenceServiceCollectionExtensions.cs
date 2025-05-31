@@ -1,9 +1,10 @@
-﻿using CloudStorage.NotificationService.Infrastructure.Persistence.Repositories;
+﻿using CloudStorage.NotificationService.Infrastructure.Abstractions.Repositories;
+using CloudStorage.NotificationService.Infrastructure.Persistence.Repositories;
 using CloudStorage.NotificationService.Persistence.Migrations;
 using FluentMigrator.Runner;
 using Microsoft.Extensions.Options;
 
-namespace CloudStorage.NotificationService.Persistence;
+namespace CloudStorage.NotificationService.Infrastructure.Persistence;
 
 public static class PersistenceServiceCollectionExtensions
 {

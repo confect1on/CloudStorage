@@ -1,4 +1,4 @@
-﻿namespace CloudStorage.NotificationService.Notifications.FileUriBuilder;
+﻿namespace CloudStorage.NotificationService.BLL.Notifications.FileUriBuilder;
 
 // TODO: add service discovery to determine frontend URI
 internal sealed class MockFileUriBuilder : IFileUriBuilder

@@ -1,4 +1,4 @@
-﻿namespace CloudStorage.NotificationService.Persistence.Repositories;
+﻿namespace CloudStorage.NotificationService.Infrastructure.Abstractions.Repositories;
 
 public interface IFilePublishedInboxRepository
 {

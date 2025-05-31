@@ -1,7 +1,7 @@
 ﻿using CloudStorage.FileService.Domain.FileManagement.Entities;
 using CloudStorage.FileService.Domain.FileManagement.ValueObjects;
 
-namespace CloudStorage.FileService.Domain.FileManagement;
+namespace CloudStorage.FileService.Domain.FileManagement.Repositories;
 
 public interface IFileMetadataRepository
 {

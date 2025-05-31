@@ -1,4 +1,4 @@
-using AuthService.KeycloakApiClient;
+using UserService.KeycloakApiClient;
 
 var builder = WebApplication.CreateBuilder(args);
 

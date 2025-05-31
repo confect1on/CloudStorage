@@ -1,4 +1,4 @@
-﻿namespace CloudStorage.NotificationService.Notifications.FileUriBuilder;
+﻿namespace CloudStorage.NotificationService.BLL.Notifications.FileUriBuilder;
 
 public interface IFileUriBuilder
 {

@@ -1,3 +1,3 @@
-﻿namespace CloudStorage.NotificationService.Notifications.EmailNotificationService.Dtos;
+﻿namespace CloudStorage.NotificationService.BLL.Notifications.EmailNotificationService.Dtos;
 
 public record EventNotificationDto(EventDto EventDto);
