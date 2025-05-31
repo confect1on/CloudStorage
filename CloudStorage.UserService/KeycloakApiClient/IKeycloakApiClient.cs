@@ -4,5 +4,5 @@ namespace UserService.KeycloakApiClient;
 
 public interface IKeycloakApiClient
 {
-    public Task CreateUserAsync(CreateUserDto createUserDto, CancellationToken cancellationToken = default);
+    public Task<Guid> CreateUserAsync(CreateUserDto createUserDto, CancellationToken cancellationToken = default);
 }
